@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import ar.com.rorra.util.Dates;
 
 public class Turno extends Entidad implements IEntidad {
+  public static final String FORMATO_FECHA = "yyyy/MM/dd HH:mm";
+
   /**
    * Doctor que atiende el turno
    */
@@ -100,6 +102,7 @@ public class Turno extends Entidad implements IEntidad {
    * @return Consultorio donde se atiende el turno
    */
   public Consultorio getConsultorio() {
+    if (doctor == null) { return null; }
     return doctor.getConsultorio();
   }
 

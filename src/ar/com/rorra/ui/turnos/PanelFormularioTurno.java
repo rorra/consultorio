@@ -7,6 +7,8 @@ import ar.com.rorra.util.UI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class PanelFormularioTurno extends JPanel {
   private Controlador controlador;
@@ -49,14 +51,18 @@ public class PanelFormularioTurno extends JPanel {
     lblPaciente = UI.crearLabel("Paciente: ");
     lblConsultorio = UI.crearLabel("Consultorio: ");
     lblDoctor = UI.crearLabel("Doctor: ");
-    lblFecha = UI.crearLabel("Fecha: ");
+    lblFecha = UI.crearLabel("Fecha: (yyyy/mm/dd hh:mm) ");
 
     txtId = UI.construirTextField(String.valueOf(turno.getId()));
     txtId.setEditable(false);
     construirListaPacientes();
     construirListaConsultorios();
     construirListaDoctores();
-    txtFecha = UI.construirTextField(String.valueOf(turno.getFecha()));
+    if (turno.getFecha() != null) {
+      txtFecha = UI.construirTextField(turno.getFecha().format(DateTimeFormatter.ofPattern(Turno.FORMATO_FECHA)));
+    } else {
+      txtFecha = UI.construirTextField("");
+    }
 
     if (!turno.isNew()) {
       form.add(lblId);
@@ -131,7 +137,14 @@ public class PanelFormularioTurno extends JPanel {
   }
 
   private void accionGuardar(ActionEvent _event) {
-    // TODO: Agregar doctor, paciente y fecha
+    turno.setDoctor(lstDoctores.getSelectedValue());
+    turno.setPaciente(lstPacientes.getSelectedValue());
+    try {
+      turno.setFecha(LocalDateTime.parse(txtFecha.getText(), DateTimeFormatter.ofPattern(Turno.FORMATO_FECHA)));
+    } catch (Exception e) {
+      controlador.getFramePrincipal().visualizarError("Fecha inválida: " + e.getMessage());
+      return;
+    }
 
     if (turno.isNew()) {
       if (controlador.insertarTurno(turno)) {

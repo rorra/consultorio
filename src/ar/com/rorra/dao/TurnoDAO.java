@@ -44,10 +44,9 @@ public class TurnoDAO extends BaseDAO<Turno> implements ITurnoDAO {
    */
   @Override
   protected String saveSQL(Turno turno) {
-    return "INSERT INTO turnos (doctor_id, paciente_id, consultorio_id, fecha) VALUES (" +
+    return "INSERT INTO turnos (doctor_id, paciente_id, fecha) VALUES (" +
       turno.getDoctor().getId() + ", " +
       turno.getPaciente().getId() + ", '" +
-      turno.getConsultorio().getId() + "', '" +
       turno.getFecha() + "')";
   }
 
@@ -61,7 +60,6 @@ public class TurnoDAO extends BaseDAO<Turno> implements ITurnoDAO {
   protected String updateSQL(Turno turno) {
     return "UPDATE turnos set doctor_id = " + turno.getDoctor().getId() +
       ", paciente_id = " + turno.getPaciente().getId() +
-      ", consultorio_id = '" + turno.getConsultorio() +
       ", fecha = '" + turno.getFecha() +
       "' WHERE id = " + turno.getId();
   }

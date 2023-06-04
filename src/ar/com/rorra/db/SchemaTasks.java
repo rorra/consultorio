@@ -85,11 +85,9 @@ public class SchemaTasks {
               id INTEGER AUTO_INCREMENT PRIMARY KEY, 
               doctor_id INTEGER, 
               paciente_id INTEGER,
-              consultorio_id INTEGER,
               fecha TIMESTAMP,
               FOREIGN KEY (doctor_id) REFERENCES doctores(id),
-              FOREIGN KEY (paciente_id) REFERENCES pacientes(id),
-              FOREIGN KEY (consultorio_id) REFERENCES consultorios(id)
+              FOREIGN KEY (paciente_id) REFERENCES pacientes(id)
           )
       """);
 

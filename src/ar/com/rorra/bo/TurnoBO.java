@@ -10,11 +10,22 @@ public class TurnoBO extends BaseBO<Turno, TurnoDAO> {
   public TurnoBO() {
     super(new TurnoDAO());
   }
-  public void validar(Turno turno) throws BOException {
+  public void validar(Turno entidad) throws BOException {
     ArrayList<String> errores = new ArrayList<>();
 
-    if (dao.getByDoctorFecha(turno.getDoctor().getId(), turno.getFecha()) != null) {
-      errores.add("El doctor ya tiene un turno asignado para la fecha " + turno.getFecha());
+    if (entidad.getDoctor() == null) {
+      errores.add("El turno debe tener un doctor");
+    }
+
+    if (entidad.getPaciente() == null) {
+      errores.add("El turno debe tener un paciente");
+    }
+
+    if (entidad.getDoctor() != null && entidad.getConsultorio() != null) {
+      Turno otro = dao.getByDoctorFecha(entidad.getDoctor().getId(), entidad.getFecha());
+      if (otro != null && otro.getId() != entidad.getId()) {
+        errores.add("El doctor ya tiene un turno asignado para la fecha " + entidad.getFecha());
+      }
     }
 
     if (!errores.isEmpty()) {
