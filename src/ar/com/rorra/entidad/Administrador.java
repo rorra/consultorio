@@ -20,7 +20,7 @@ public class Administrador extends Empleado implements IEntidad {
    * @param nombre nombre del administrador
    * @param telefono telefono del administrador
    */
-  public Administrador(String email, String password, long legajo, String nombre, String telefono) {
+  public Administrador(String email, String password, int legajo, String nombre, String telefono) {
     super(email, password, legajo, nombre, telefono);
   }
 
@@ -33,7 +33,7 @@ public class Administrador extends Empleado implements IEntidad {
    * @param nombre nombre del administrador
    * @param telefono telefono del administrador
    */
-  public Administrador(int id, String email, String password, long legajo, String nombre, String telefono) {
+  public Administrador(int id, String email, String password, int legajo, String nombre, String telefono) {
     super(id, email, password, legajo, nombre, telefono);
   }
 }

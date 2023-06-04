@@ -78,7 +78,7 @@ public class DoctorDAO extends BaseDAO<Doctor> implements IDoctorDAO {
    * @return
    * @throws DBException
    */
-  public Doctor getByLegajo(long legajo) throws DBException {
+  public Doctor getByLegajo(int legajo) throws DBException {
     return getByField("legajo", String.valueOf(legajo));
   }
 

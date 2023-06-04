@@ -40,7 +40,7 @@ public class PanelFormularioObraSocial extends JPanel {
 
     lblId = UI.crearLabel("ID: ");
     lblNombre = UI.crearLabel("Nombre: ");
-    lblDescuento = UI.crearLabel("Descuento: ");
+    lblDescuento = UI.crearLabel("Descuento (%, 0-100): ");
 
     txtId = UI.construirTextField(String.valueOf(obraSocial.getId()));
     txtId.setEditable(false);

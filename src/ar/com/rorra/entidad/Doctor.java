@@ -24,7 +24,7 @@ public class Doctor extends Empleado implements IEntidad {
     super();
   }
 
-  public Doctor(String email, String password, long legajo, String nombre, String telefono, Consultorio consultorio, BigDecimal tarifa) {
+  public Doctor(String email, String password, int legajo, String nombre, String telefono, Consultorio consultorio, BigDecimal tarifa) {
     super(email, password, legajo, nombre, telefono);
     this.consultorio = consultorio;
     this.tarifa = tarifa;
@@ -40,7 +40,7 @@ public class Doctor extends Empleado implements IEntidad {
    * @param nombre   nombre del doctor
    * @param telefono telefono del doctor
    */
-  public Doctor(int id, String email, String password, long legajo, String nombre, String telefono, Consultorio consultorio, BigDecimal tarifa) {
+  public Doctor(int id, String email, String password, int legajo, String nombre, String telefono, Consultorio consultorio, BigDecimal tarifa) {
     super(id, email, password, legajo, nombre, telefono);
     this.consultorio = consultorio;
     this.tarifa = tarifa;

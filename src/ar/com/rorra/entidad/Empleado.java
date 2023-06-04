@@ -9,7 +9,7 @@ public abstract class Empleado extends Usuario implements IEntidad {
   /**
    * Todos los empleados tienen un legajo único en el sistema
    */
-  private long legajo;
+  private int legajo;
 
   /**
    * Nombre del doctor
@@ -36,7 +36,7 @@ public abstract class Empleado extends Usuario implements IEntidad {
    * @param nombre   nombre del empleado
    * @param telefono telefono del empleado
    */
-  public Empleado(String email, String password, long legajo, String nombre, String telefono) {
+  public Empleado(String email, String password, int legajo, String nombre, String telefono) {
     super(email, password);
     this.legajo = legajo;
     this.nombre = nombre;
@@ -53,7 +53,7 @@ public abstract class Empleado extends Usuario implements IEntidad {
    * @param nombre   nombre del empleado
    * @param telefono telefono del empleado
    */
-  public Empleado(int id, String email, String password, long legajo, String nombre, String telefono) {
+  public Empleado(int id, String email, String password, int legajo, String nombre, String telefono) {
     super(id, email, password);
     this.legajo = legajo;
     this.nombre = nombre;
@@ -65,7 +65,7 @@ public abstract class Empleado extends Usuario implements IEntidad {
    *
    * @return
    */
-  public long getLegajo() {
+  public int getLegajo() {
 
     return legajo;
   }
@@ -75,7 +75,7 @@ public abstract class Empleado extends Usuario implements IEntidad {
    *
    * @param legajo legajo del empleado
    */
-  public void setLegajo(long legajo) {
+  public void setLegajo(int legajo) {
 
     this.legajo = legajo;
   }

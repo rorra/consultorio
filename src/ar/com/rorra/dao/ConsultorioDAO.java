@@ -1,5 +1,6 @@
 package ar.com.rorra.dao;
 
+import ar.com.rorra.entidad.Administrador;
 import ar.com.rorra.entidad.Consultorio;
 import ar.com.rorra.exceptions.DBException;
 import ar.com.rorra.exceptions.DBExceptionType;
@@ -46,6 +47,17 @@ public class ConsultorioDAO extends BaseDAO<Consultorio> implements IConsultorio
     return "UPDATE consultorios set nombre = '" + consultorio.getNombre() +
       "', direccion = '" + consultorio.getDirección() +
       "' WHERE id = " + consultorio.getId();
+  }
+
+  /**
+   * Obtiene un Consultorio de la base de datos a partir de su nombre.
+   *
+   * @param nombre Consultorio del objeto a obtener
+   * @return
+   * @throws DBException
+   */
+  public Consultorio getByNombre(String nombre) throws DBException {
+    return getByField("nombre", nombre);
   }
 
 

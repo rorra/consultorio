@@ -1,6 +1,7 @@
 package ar.com.rorra.dao;
 
 import ar.com.rorra.entidad.Administrador;
+import ar.com.rorra.entidad.Doctor;
 import ar.com.rorra.exceptions.DBException;
 import ar.com.rorra.exceptions.DBExceptionType;
 
@@ -49,6 +50,17 @@ public class AdministradorDAO extends BaseDAO<Administrador> implements IAdminis
       "', nombre = '" + administrador.getNombre() +
       "', telefono = '" + administrador.getTelefono() +
       "' WHERE id = " + administrador.getId();
+  }
+
+  /**
+   * Obtiene un Administrador de la base de datos a partir de su legajo.
+   *
+   * @param legajo Administrador del objeto a obtener
+   * @return
+   * @throws DBException
+   */
+  public Administrador getByLegajo(int legajo) throws DBException {
+    return getByField("legajo", String.valueOf(legajo));
   }
 
   /**

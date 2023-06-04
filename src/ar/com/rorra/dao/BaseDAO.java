@@ -224,7 +224,7 @@ public abstract class BaseDAO<T extends IEntidad> implements IBaseDAO<T> {
    * @throws DBException
    */
   public T getByField(String field, String value) throws DBException {
-    String sql = "SELECT * FROM " + this.getEntidad() + " WHERE " + field + "'" + value + "'";
+    String sql = "SELECT * FROM " + this.getEntidad() + " WHERE " + field + " = '" + value + "'";
 
     return fetchOneByQuery(sql);
   }

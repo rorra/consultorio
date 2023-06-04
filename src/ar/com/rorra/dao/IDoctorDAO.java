@@ -14,5 +14,5 @@ public interface IDoctorDAO extends IBaseDAO<Doctor> {
    * @return Doctor
    * @throws DBException
    */
-  Doctor getByLegajo(long legajo) throws DBException;
+  Doctor getByLegajo(int legajo) throws DBException;
 }

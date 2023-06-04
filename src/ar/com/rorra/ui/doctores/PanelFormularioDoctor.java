@@ -138,6 +138,8 @@ public class PanelFormularioDoctor extends JPanel {
       controlador.getFramePrincipal().visualizarError("El DNI es inválido.");
       return;
     }
+    doctor.setEmail(txtEmail.getText());
+    doctor.setPassword(txtPassword.getText());
     doctor.setNombre(txtNombre.getText());
     doctor.setTelefono(txtTelefono.getText());
     try {
