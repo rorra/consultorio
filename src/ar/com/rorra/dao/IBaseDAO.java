@@ -3,6 +3,7 @@ package ar.com.rorra.dao;
 import ar.com.rorra.exceptions.DBException;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public interface IBaseDAO<T> {
   /**
@@ -29,6 +30,14 @@ public interface IBaseDAO<T> {
    * @throws DBException
    */
   ArrayList<T> getAll(String sortField) throws DBException;
+
+  /**
+   * Obtiene todos los objetos de la base de datos que cumplien con las condiciones fields.
+   *
+   * @return Mapa de condiciones para la busqueda
+   * @throws DBException
+   */
+  public ArrayList<T> getAll(Map<String, String> fields) throws DBException;
 
   /**
    * Guarda un objeto en la base de datos.

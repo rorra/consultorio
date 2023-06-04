@@ -140,6 +140,27 @@ public abstract class BaseDAO<T extends IEntidad> implements IBaseDAO<T> {
   }
 
   /**
+   * Obtiene todas las entidades de la base de datos ordenados por un campo.
+   *
+   * @return Lista de entidades
+   * @throws DBException
+   */
+  @Override
+  public ArrayList<T> getAll(Map<String, String> fields) throws DBException {
+    String sql = this.selectAll();
+
+    if (fields != null) {
+      sql += " WHERE ";
+      for (Map.Entry<String,String> entry : fields.entrySet()) {
+        sql += entry.getKey() + " = '" + entry.getValue() + "' AND ";
+      }
+      sql = sql.substring(0, sql.length() - 5);
+    }
+
+    return fetchAllByQuery(sql);
+  }
+
+  /**
    * Guarda una entidad en la base de datos.
    *
    * @param entidad Entidad a guardar

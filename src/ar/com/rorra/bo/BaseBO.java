@@ -6,6 +6,7 @@ import ar.com.rorra.exceptions.DBException;
 import ar.com.rorra.exceptions.BOException;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Clase genérica para implementar la lógica de negocios para las diferentes entidades
@@ -77,6 +78,14 @@ public abstract class BaseBO<ENTIDAD extends IEntidad, DAO extends BaseDAO<ENTID
   public ArrayList<ENTIDAD> getAll(String sortField) throws BOException {
     try {
       return dao.getAll(sortField);
+    } catch (DBException e) {
+      throw new BOException("Error al obtener las entidades de base de datos: " + e.getMessage());
+    }
+  }
+
+  public ArrayList<ENTIDAD> getAll(Map<String, String> conditions) throws BOException {
+    try {
+      return dao.getAll(conditions);
     } catch (DBException e) {
       throw new BOException("Error al obtener las entidades de base de datos: " + e.getMessage());
     }

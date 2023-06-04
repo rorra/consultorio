@@ -102,6 +102,7 @@ public class PanelFormularioTurno extends JPanel {
       listConsultoriosModel.addElement(entidad);
     }
     lstConsultorios.setModel(listConsultoriosModel);
+    lstConsultorios.addListSelectionListener(e -> actualizarListaDoctores());
 
     if (turno.getConsultorio() != null) {
       lstConsultorios.setSelectedValue(turno.getConsultorio(), true);
@@ -111,9 +112,18 @@ public class PanelFormularioTurno extends JPanel {
   public void construirListaDoctores() {
     lstDoctores = new JList();
 
+    actualizarListaDoctores();
+  }
+
+  public void actualizarListaDoctores() {
+    if (lstDoctores == null) return;
+
     listDoctoresModel = new DefaultListModel<>();
-    for (Doctor entidad : controlador.listarDoctores()) {
-      listDoctoresModel.addElement(entidad);
+
+    if (lstConsultorios.getSelectedValue() != null) {
+      for (Doctor entidad : controlador.listarDoctores(lstConsultorios.getSelectedValue())) {
+        listDoctoresModel.addElement(entidad);
+      }
     }
     lstDoctores.setModel(listDoctoresModel);
 

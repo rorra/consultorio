@@ -17,11 +17,6 @@ public class Turno extends Entidad implements IEntidad {
   private Paciente paciente;
 
   /**
-   * Consultorio donde se atiende el turno
-   */
-  private Consultorio consultorio;
-
-  /**
    * Fecha y hora del turno
    */
   private LocalDateTime fecha;
@@ -104,15 +99,6 @@ public class Turno extends Entidad implements IEntidad {
   public Consultorio getConsultorio() {
     if (doctor == null) { return null; }
     return doctor.getConsultorio();
-  }
-
-  /**
-   * Setea el consultorio donde se atiende el turno
-   *
-   * @param consultorio Consultorio donde se atiende el turno
-   */
-  public void setConsultorio(Consultorio consultorio) {
-    doctor.setConsultorio(consultorio);
   }
 
   /**

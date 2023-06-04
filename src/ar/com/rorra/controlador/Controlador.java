@@ -8,6 +8,7 @@ import ar.com.rorra.ui.FramePrincipal;
 
 import javax.swing.*;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Controlador principal de la aplicación.
@@ -67,6 +68,14 @@ public class Controlador {
     }
   }
 
+  public <ENTIDAD extends IEntidad, DAO extends BaseDAO<ENTIDAD>> List<ENTIDAD> getEntidades(BaseBO<ENTIDAD, DAO> bo, Map<String, String> conditions) {
+    try {
+      return bo.getAll(conditions);
+    } catch (BOException e) {
+      framePrincipal.visualizarError(e);
+      return null;
+    }
+  }
 
   public <ENTIDAD extends IEntidad, DAO extends BaseDAO<ENTIDAD>> boolean saveEntidad(BaseBO<ENTIDAD, DAO> bo, ENTIDAD entity, String successMessage) {
     try {
@@ -140,6 +149,11 @@ public class Controlador {
 
   public List<Doctor> listarDoctores() {
     return getEntidades(doctorBO);
+  }
+
+  public List<Doctor> listarDoctores(Consultorio consultorio) {
+    Map<String, String> conditions = Map.of("consultorio_id", Integer.toString(consultorio.getId()));
+    return getEntidades(doctorBO, conditions);
   }
 
   public boolean insertarDoctor(Doctor doctor) {
