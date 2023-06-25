@@ -6,18 +6,20 @@ import ar.com.rorra.entidad.IEntidad;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 /**
  * Panel genérico para la gestión de entidades.
  */
 public abstract class PanelLista extends Panel {
-  private Controlador controlador;
-  private JButton btnNuevo;
-  private JButton btnModificar;
-  private JButton btnEliminar;
-  private JButton btnVolver;
-  private JList entityList;
-  DefaultListModel<IEntidad> listModel;
+  protected Controlador controlador;
+  protected JButton btnNuevo;
+  protected JButton btnModificar;
+  protected JButton btnEliminar;
+  protected JButton btnVolver;
+  protected JList entityList;
+  protected JScrollPane scrollPane;
+  protected DefaultListModel<IEntidad> listModel;
 
   /**
    * Constructor
@@ -32,18 +34,18 @@ public abstract class PanelLista extends Panel {
     construirLista();
     JPanel botones = construirBotones();
 
-    add(entityList, BorderLayout.CENTER);
+    add(scrollPane, BorderLayout.CENTER);
     add(botones, BorderLayout.SOUTH);
   }
 
   /**
    * Construye la lista de entidades.
    */
-  private void construirLista() {
+  protected void construirLista() {
     entityList = new JList();
 
     listModel = new DefaultListModel<>();
-    for (IEntidad entidad : controlador.listarEntidades(this.getEntityClass())) {
+    for (IEntidad entidad : this.listarEntidades()) {
       listModel.addElement(entidad);
     }
     entityList.setModel(listModel);
@@ -57,13 +59,24 @@ public abstract class PanelLista extends Panel {
         btnEliminar.setEnabled(true);
       }
     });
+
+    scrollPane = new JScrollPane(entityList);
+  }
+
+  /**
+   * Devuelve la lista de entidades desde el almacenamiento de datos
+   * @return lista de entidades
+   * @param <T> tipo de entidad
+   */
+  protected <T extends IEntidad> List<T> listarEntidades() {
+    return controlador.listarEntidades(this.getEntityClass());
   }
 
   /**
    * Construye los botones de la pantalla
    * @return panel con los botones
    */
-  private JPanel construirBotones() {
+  protected JPanel construirBotones() {
     JPanel botones = new JPanel();
 
     btnNuevo = new JButton("Nuevo " + this.getEntityName());
@@ -91,7 +104,7 @@ public abstract class PanelLista extends Panel {
    * Acción del botón nuevo, que crea una nueva entidad
    * @param _event evento
    */
-  private void accionNuevo(ActionEvent _event) {
+  protected void accionNuevo(ActionEvent _event) {
     controlador.panelNuevaEntidad(getEntityClass());
   }
 
@@ -99,7 +112,7 @@ public abstract class PanelLista extends Panel {
    * Acción del botón modificar, que modifica la entidad seleccionada
    * @param _event evento
    */
-  private void accionModificar(ActionEvent _event) {
+  protected void accionModificar(ActionEvent _event) {
     controlador.panelModificarEntidad((IEntidad) entityList.getSelectedValue());
   }
 
@@ -107,7 +120,7 @@ public abstract class PanelLista extends Panel {
    * Acción del botón eliminar, que elimina la entidad seleccionada
    * @param _event evento
    */
-  private void accionEliminar(ActionEvent _event) {
+  protected void accionEliminar(ActionEvent _event) {
     if (controlador.eliminarEntidad((IEntidad) entityList.getSelectedValue())) {
       listModel.removeElement(entityList.getSelectedValue());
     }
@@ -117,7 +130,7 @@ public abstract class PanelLista extends Panel {
    * Acción del botón volver, que vuelve a la pantalla principal
    * @param _event
    */
-  private void accionVolver(ActionEvent _event) {
+  protected void accionVolver(ActionEvent _event) {
     controlador.visualizarPantallaPrincipal();
   }
 }

@@ -2,6 +2,7 @@ package ar.com.rorra.ui.turnos;
 
 import ar.com.rorra.controlador.Controlador;
 import ar.com.rorra.entidad.*;
+import ar.com.rorra.ui.PanelFormulario;
 import ar.com.rorra.util.UI;
 
 import javax.swing.*;
@@ -10,9 +11,7 @@ import java.awt.event.ActionEvent;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class PanelFormularioTurno extends JPanel {
-  private Controlador controlador;
-  private Turno turno;
+public class PanelFormularioTurno extends PanelFormulario {
   private JLabel lblId;
   private JLabel lblPaciente;
   private JLabel lblConsultorio;
@@ -28,30 +27,30 @@ public class PanelFormularioTurno extends JPanel {
   private DefaultListModel<Doctor> listDoctoresModel;
   private JTextField txtFecha;
 
-  public PanelFormularioTurno(Controlador controlador, Turno turno) {
-    this.controlador = controlador;
-    this.turno = turno;
-
-    String titulo = turno.isNew() ? "Nuevo Turno" : "Modificar Turno";
-    controlador.getFramePrincipal().setTitulo(titulo);
-
-    setLayout(new BorderLayout());
-
-    add(construirFormulario(), BorderLayout.CENTER);
-    add(construirBotones(), BorderLayout.SOUTH);
+  /**
+   * Constructor
+   * @param controlador controlador principal
+   * @param entidad entidad referente al formulario
+   */
+  public PanelFormularioTurno(Controlador controlador, IEntidad entidad) {
+    super(controlador, entidad);
   }
 
-  private JPanel construirFormulario() {
+  /**
+   * Construye el formulario de la entidad que se esta creando/modificando
+   * @return panel con el formulario
+   */
+  protected JPanel construirFormulario() {
     JPanel form = new JPanel();
-
-    int filas = turno.isNew() ? 5 : 6;
-    form.setLayout(new GridLayout(filas, 2, 10, 10));
+    form.setLayout(new GridLayout(0, 2, 10, 10));
 
     lblId = UI.crearLabel("ID: ");
     lblPaciente = UI.crearLabel("Paciente: ");
     lblConsultorio = UI.crearLabel("Consultorio: ");
     lblDoctor = UI.crearLabel("Doctor: ");
     lblFecha = UI.crearLabel("Fecha: (yyyy/mm/dd hh:mm) ");
+
+    Turno turno = (Turno)entidad;
 
     txtId = UI.construirTextField(String.valueOf(turno.getId()));
     txtId.setEditable(false);
@@ -80,6 +79,9 @@ public class PanelFormularioTurno extends JPanel {
     return form;
   }
 
+  /**
+   * Construye la lista de pacientes
+   */
   private void construirListaPacientes() {
     lstPacientes = new JList();
 
@@ -89,11 +91,15 @@ public class PanelFormularioTurno extends JPanel {
     }
     lstPacientes.setModel(listPacientesModel);
 
+    Turno turno = (Turno)entidad;
     if (turno.getPaciente() != null) {
       lstPacientes.setSelectedValue(turno.getPaciente(), true);
     }
   }
 
+  /**
+   * Construye la lista de consultorios
+   */
   private void construirListaConsultorios() {
     lstConsultorios = new JList();
 
@@ -104,17 +110,24 @@ public class PanelFormularioTurno extends JPanel {
     lstConsultorios.setModel(listConsultoriosModel);
     lstConsultorios.addListSelectionListener(e -> actualizarListaDoctores());
 
+    Turno turno = (Turno)entidad;
     if (turno.getConsultorio() != null) {
       lstConsultorios.setSelectedValue(turno.getConsultorio(), true);
     }
   }
 
+  /**
+   * Construye la lista de doctores
+   */
   public void construirListaDoctores() {
     lstDoctores = new JList();
 
     actualizarListaDoctores();
   }
 
+  /**
+   * Actualiza la lista de doctores
+   */
   public void actualizarListaDoctores() {
     if (lstDoctores == null) return;
 
@@ -127,26 +140,18 @@ public class PanelFormularioTurno extends JPanel {
     }
     lstDoctores.setModel(listDoctoresModel);
 
+    Turno turno = (Turno)entidad;
     if (turno.getDoctor() != null) {
       lstDoctores.setSelectedValue(turno.getDoctor(), true);
     }
   }
 
-  private JPanel construirBotones() {
-    JPanel botones = new JPanel();
-
-    JButton btnGuardar = new JButton("Guardar");
-    btnGuardar.addActionListener(e -> accionGuardar(e));
-    botones.add(btnGuardar);
-
-    JButton btnCancelar = new JButton("Cancelar");
-    btnCancelar.addActionListener(e -> accionCancelar(e));
-    botones.add(btnCancelar);
-
-    return botones;
-  }
-
-  private void accionGuardar(ActionEvent _event) {
+  /**
+   * Acción a ejecutar cuando se presiona el botón guardar
+   * @param _event evento
+   */
+  protected void accionGuardar(ActionEvent _event) {
+    Turno turno = (Turno)entidad;
     turno.setDoctor(lstDoctores.getSelectedValue());
     turno.setPaciente(lstPacientes.getSelectedValue());
     try {
@@ -167,7 +172,20 @@ public class PanelFormularioTurno extends JPanel {
     }
   }
 
-  private void accionCancelar(ActionEvent _event) {
+  /**
+   * Acción a ejecutar cuando se presiona el botón cancelar
+   * @param _event evento
+   */
+  protected void accionCancelar(ActionEvent _event) {
     controlador.visualizarTurnos();
+  }
+
+  /**
+   * Devuelve la clase de la entidad referente al formulario
+   * @return clase de la entidad
+   */
+  @Override
+  public Class getEntityClass() {
+    return Turno.class;
   }
 }

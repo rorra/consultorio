@@ -1,18 +1,18 @@
 package ar.com.rorra.ui.pacientes;
 
 import ar.com.rorra.controlador.Controlador;
+import ar.com.rorra.entidad.Administrador;
 import ar.com.rorra.entidad.IEntidad;
 import ar.com.rorra.entidad.ObraSocial;
 import ar.com.rorra.entidad.Paciente;
+import ar.com.rorra.ui.PanelFormulario;
 import ar.com.rorra.util.UI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class PanelFormularioPaciente extends JPanel {
-  private Controlador controlador;
-  private Paciente paciente;
+public class PanelFormularioPaciente extends PanelFormulario {
   private JLabel lblId;
   private JLabel lblEmail;
   private JLabel lblPassword;
@@ -30,24 +30,23 @@ public class PanelFormularioPaciente extends JPanel {
   private JList<ObraSocial> lstObrasSociales;
   private DefaultListModel<ObraSocial> listModel;
 
-  public PanelFormularioPaciente(Controlador controlador, Paciente paciente) {
-    this.controlador = controlador;
-    this.paciente = paciente;
-
-    String titulo = paciente.isNew() ? "Nuevo Paciente" : "Modificar Paciente";
-    controlador.getFramePrincipal().setTitulo(titulo);
-
-    setLayout(new BorderLayout());
-
-    add(construirFormulario(), BorderLayout.CENTER);
-    add(construirBotones(), BorderLayout.SOUTH);
+  /**
+   * Constructor
+   * @param controlador controlador principal
+   * @param entidad entidad referente al formulario
+   */
+  public PanelFormularioPaciente(Controlador controlador, IEntidad entidad) {
+    super(controlador, entidad);
   }
 
-  private JPanel construirFormulario() {
+  /**
+   * Construye el formulario de la entidad que se esta creando/modificando
+   * @return panel con el formulario
+   */
+  @Override
+  protected JPanel construirFormulario() {
     JPanel form = new JPanel();
-
-    int filas = paciente.isNew() ? 7 : 8;
-    form.setLayout(new GridLayout(filas, 2, 10, 10));
+    form.setLayout(new GridLayout(0, 2, 10, 10));
 
     lblId = UI.crearLabel("ID: ");
     lblEmail = UI.crearLabel("Email: ");
@@ -56,6 +55,8 @@ public class PanelFormularioPaciente extends JPanel {
     lblNombre = UI.crearLabel("Nombre: ");
     lblTelefono = UI.crearLabel("Telefono: ");
     lblObraSocial = UI.crearLabel("Obra Social: ");
+
+    Paciente paciente = (Paciente)entidad;
 
     txtId = UI.construirTextField(String.valueOf(paciente.getId()));
     txtId.setEditable(false);
@@ -86,6 +87,9 @@ public class PanelFormularioPaciente extends JPanel {
     return form;
   }
 
+  /**
+   * Construye la lista de obras sociales
+   */
   private void construirListaObrasSociales() {
     lstObrasSociales = new JList();
 
@@ -95,26 +99,19 @@ public class PanelFormularioPaciente extends JPanel {
     }
     lstObrasSociales.setModel(listModel);
 
+    Paciente paciente = (Paciente)entidad;
     if (paciente.getObraSocial() != null) {
       lstObrasSociales.setSelectedValue(paciente.getObraSocial(), true);
     }
   }
 
-  private JPanel construirBotones() {
-    JPanel botones = new JPanel();
-
-    JButton btnGuardar = new JButton("Guardar");
-    btnGuardar.addActionListener(e -> accionGuardar(e));
-    botones.add(btnGuardar);
-
-    JButton btnCancelar = new JButton("Cancelar");
-    btnCancelar.addActionListener(e -> accionCancelar(e));
-    botones.add(btnCancelar);
-
-    return botones;
-  }
-
-  private void accionGuardar(ActionEvent _event) {
+  /**
+   * Acción a ejecutar cuando se presiona el botón guardar
+   * @param _event evento
+   */
+  @Override
+  protected void accionGuardar(ActionEvent _event) {
+    Paciente paciente = (Paciente)entidad;
     try {
       paciente.setDni(Integer.parseInt(txtDNI.getText()));
     } catch (NumberFormatException _e) {
@@ -143,7 +140,20 @@ public class PanelFormularioPaciente extends JPanel {
     }
   }
 
-  private void accionCancelar(ActionEvent _event) {
+  /**
+   * Acción a ejecutar cuando se presiona el botón cancelar
+   * @param _event evento
+   */
+  protected void accionCancelar(ActionEvent _event) {
     controlador.visualizarPacientes();
+  }
+
+  /**
+   * Devuelve la clase de la entidad referente al formulario
+   * @return clase de la entidad
+   */
+  @Override
+  public Class getEntityClass() {
+    return Administrador.class;
   }
 }

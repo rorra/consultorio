@@ -1,16 +1,17 @@
 package ar.com.rorra.ui.obrasSociales;
 
 import ar.com.rorra.controlador.Controlador;
+import ar.com.rorra.entidad.Administrador;
+import ar.com.rorra.entidad.IEntidad;
 import ar.com.rorra.entidad.ObraSocial;
+import ar.com.rorra.ui.PanelFormulario;
 import ar.com.rorra.util.UI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class PanelFormularioObraSocial extends JPanel {
-  private Controlador controlador;
-  private ObraSocial obraSocial;
+public class PanelFormularioObraSocial extends PanelFormulario {
   private JLabel lblId;
   private JLabel lblNombre;
   private JLabel lblDescuento;
@@ -19,28 +20,29 @@ public class PanelFormularioObraSocial extends JPanel {
   private JTextField txtNombre;
   private JTextField txtDescuento;
 
-  public PanelFormularioObraSocial(Controlador controlador, ObraSocial obraSocial) {
-    this.controlador = controlador;
-    this.obraSocial = obraSocial;
-
-    String titulo = obraSocial.isNew() ? "Nuevo Obra Social" : "Modificar Obra Social";
-    controlador.getFramePrincipal().setTitulo(titulo);
-
-    setLayout(new BorderLayout());
-
-    add(construirFormulario(), BorderLayout.CENTER);
-
-    add(construirBotones(), BorderLayout.SOUTH);
+  /**
+   * Constructor
+   * @param controlador controlador principal
+   * @param entidad entidad referente al formulario
+   */
+  public PanelFormularioObraSocial(Controlador controlador, IEntidad entidad) {
+    super(controlador, entidad);
   }
 
-  private JPanel construirFormulario() {
+  /**
+   * Construye el formulario de la entidad que se esta creando/modificando
+   * @return panel con el formulario
+   */
+  @Override
+  protected JPanel construirFormulario() {
     JPanel form = new JPanel();
-    int filas = obraSocial.isNew() ? 3 : 4;
-    form.setLayout(new GridLayout(filas, 2, 10, 10));
+    form.setLayout(new GridLayout(0, 2, 10, 10));
 
     lblId = UI.crearLabel("ID: ");
     lblNombre = UI.crearLabel("Nombre: ");
     lblDescuento = UI.crearLabel("Descuento (%, 0-100): ");
+
+    ObraSocial obraSocial = (ObraSocial)entidad;
 
     txtId = UI.construirTextField(String.valueOf(obraSocial.getId()));
     txtId.setEditable(false);
@@ -59,21 +61,12 @@ public class PanelFormularioObraSocial extends JPanel {
     return form;
   }
 
-  private JPanel construirBotones() {
-    JPanel botones = new JPanel();
-
-    JButton btnGuardar = new JButton("Guardar");
-    btnGuardar.addActionListener(e -> accionGuardar(e));
-    botones.add(btnGuardar);
-
-    JButton btnCancelar = new JButton("Cancelar");
-    btnCancelar.addActionListener(e -> accionCancelar(e));
-    botones.add(btnCancelar);
-
-    return botones;
-  }
-
-  private void accionGuardar(ActionEvent _event) {
+  /**
+   * Acción a ejecutar cuando se presiona el botón guardar
+   * @param _event evento
+   */
+  protected void accionGuardar(ActionEvent _event) {
+    ObraSocial obraSocial = (ObraSocial)entidad;
     obraSocial.setNombre(txtNombre.getText());
     try {
       obraSocial.setDescuento(Integer.parseInt(txtDescuento.getText()));
@@ -94,7 +87,20 @@ public class PanelFormularioObraSocial extends JPanel {
     }
   }
 
-  private void accionCancelar(ActionEvent _event) {
+  /**
+   * Acción a ejecutar cuando se presiona el botón cancelar
+   * @param _event evento
+   */
+  protected void accionCancelar(ActionEvent _event) {
     controlador.visualizarObrasSociales();
+  }
+
+  /**
+   * Devuelve la clase de la entidad referente al formulario
+   * @return clase de la entidad
+   */
+  @Override
+  public Class getEntityClass() {
+    return ObraSocial.class;
   }
 }

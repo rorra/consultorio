@@ -25,12 +25,17 @@ public class PanelFormularioAdministrador extends PanelFormulario {
   private JTextField txtNombre;
   private JTextField txtTelefono;
 
+  /**
+   * Constructor
+   * @param controlador controlador principal
+   * @param entidad entidad referente al formulario
+   */
   public PanelFormularioAdministrador(Controlador controlador, IEntidad entidad) {
     super(controlador, entidad);
   }
 
   /**
-   * Construye el formulario para el administrador
+   * Construye el formulario de la entidad que se esta creando/modificando
    * @return panel con el formulario
    */
   @Override

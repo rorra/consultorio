@@ -4,6 +4,7 @@ import ar.com.rorra.controlador.Controlador;
 import ar.com.rorra.entidad.Consultorio;
 import ar.com.rorra.entidad.Doctor;
 import ar.com.rorra.entidad.IEntidad;
+import ar.com.rorra.ui.PanelFormulario;
 import ar.com.rorra.util.UI;
 
 import javax.swing.*;
@@ -14,9 +15,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
-public class PanelFormularioDoctor extends JPanel {
-  private Controlador controlador;
-  private Doctor doctor;
+public class PanelFormularioDoctor extends PanelFormulario {
   private JLabel lblId;
   private JLabel lblEmail;
   private JLabel lblPassword;
@@ -36,25 +35,23 @@ public class PanelFormularioDoctor extends JPanel {
   private JList<Consultorio> lstConsultorios;
   private DefaultListModel<Consultorio> listModel;
 
-
-  public PanelFormularioDoctor(Controlador controlador, Doctor doctor) {
-    this.controlador = controlador;
-    this.doctor = doctor;
-
-    String titulo = doctor.isNew() ? "Nuevo Doctor" : "Modificar Doctor";
-    controlador.getFramePrincipal().setTitulo(titulo);
-
-    setLayout(new BorderLayout());
-
-    add(construirFormulario(), BorderLayout.CENTER);
-
-    add(construirBotones(), BorderLayout.SOUTH);
+  /**
+   * Constructor
+   * @param controlador controlador principal
+   * @param entidad entidad referente al formulario
+   */
+  public PanelFormularioDoctor(Controlador controlador, IEntidad entidad) {
+    super(controlador, entidad);
   }
 
-  private JPanel construirFormulario() {
+  /**
+   * Construye el formulario de la entidad que se esta creando/modificando
+   * @return panel con el formulario
+   */
+  @Override
+  protected JPanel construirFormulario() {
     JPanel form = new JPanel();
-    int filas = doctor.isNew() ? 7 : 8;
-    form.setLayout(new GridLayout(filas, 2, 10, 10));
+    form.setLayout(new GridLayout(0, 2, 10, 10));
 
     lblId = UI.crearLabel("ID: ");
     lblEmail = UI.crearLabel("Email: ");
@@ -64,6 +61,8 @@ public class PanelFormularioDoctor extends JPanel {
     lblTelefono = UI.crearLabel("Telefono: ");
     lblTarifa = UI.crearLabel("Tarifa: ");
     lblConsultorio = UI.crearLabel("Consultorio: ");
+
+    Doctor doctor = (Doctor)entidad;
 
     txtId = UI.construirTextField(String.valueOf(doctor.getId()));
     txtId.setEditable(false);
@@ -113,26 +112,18 @@ public class PanelFormularioDoctor extends JPanel {
     }
     lstConsultorios.setModel(listModel);
 
+    Doctor doctor = (Doctor)entidad;
     if (doctor.getConsultorio() != null) {
       lstConsultorios.setSelectedValue(doctor.getConsultorio(), true);
     }
   }
 
-  private JPanel construirBotones() {
-    JPanel botones = new JPanel();
-
-    JButton btnGuardar = new JButton("Guardar");
-    btnGuardar.addActionListener(e -> accionGuardar(e));
-    botones.add(btnGuardar);
-
-    JButton btnCancelar = new JButton("Cancelar");
-    btnCancelar.addActionListener(e -> accionCancelar(e));
-    botones.add(btnCancelar);
-
-    return botones;
-  }
-
-  private void accionGuardar(ActionEvent _event) {
+  /**
+   * Acción a ejecutar cuando se presiona el botón guardar
+   * @param _event evento
+   */
+  protected void accionGuardar(ActionEvent _event) {
+    Doctor doctor = (Doctor)entidad;
     try {
       doctor.setLegajo(Integer.parseInt(txtLegajo.getText()));
     } catch (NumberFormatException _e) {
@@ -167,7 +158,20 @@ public class PanelFormularioDoctor extends JPanel {
     }
   }
 
-  private void accionCancelar(ActionEvent _event) {
+  /**
+   * Acción a ejecutar cuando se presiona el botón cancelar
+   * @param _event evento
+   */
+  protected void accionCancelar(ActionEvent _event) {
     controlador.visualizarDoctores();
+  }
+
+  /**
+   * Devuelve la clase de la entidad referente al formulario
+   * @return clase de la entidad
+   */
+  @Override
+  public Class getEntityClass() {
+    return Doctor.class;
   }
 }

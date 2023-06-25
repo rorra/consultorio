@@ -2,15 +2,15 @@ package ar.com.rorra.ui.consultorios;
 
 import ar.com.rorra.controlador.Controlador;
 import ar.com.rorra.entidad.Consultorio;
+import ar.com.rorra.entidad.IEntidad;
+import ar.com.rorra.ui.PanelFormulario;
 import ar.com.rorra.util.UI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class PanelFormularioConsultorio extends JPanel {
-  private Controlador controlador;
-  private Consultorio consultorio;
+public class PanelFormularioConsultorio extends PanelFormulario {
   private JLabel lblId;
   private JLabel lblNombre;
   private JLabel lblDireccion;
@@ -18,28 +18,29 @@ public class PanelFormularioConsultorio extends JPanel {
   private JTextField txtNombre;
   private JTextField txtDireccion;
 
-  public PanelFormularioConsultorio(Controlador controlador, Consultorio consultorio) {
-    this.controlador = controlador;
-    this.consultorio = consultorio;
-
-    String titulo = consultorio.isNew() ? "Nuevo Consultorio" : "Modificar Consultorio";
-    controlador.getFramePrincipal().setTitulo(titulo);
-
-    setLayout(new BorderLayout());
-
-    add(construirFormulario(), BorderLayout.CENTER);
-
-    add(construirBotones(), BorderLayout.SOUTH);
+  /**
+   * Constructor
+   * @param controlador controlador principal
+   * @param entidad entidad referente al formulario
+   */
+  public PanelFormularioConsultorio(Controlador controlador, IEntidad entidad) {
+    super(controlador, entidad);
   }
 
-  private JPanel construirFormulario() {
+  /**
+   * Construye el formulario de la entidad que se esta creando/modificando
+   * @return panel con el formulario
+   */
+  @Override
+  protected JPanel construirFormulario() {
     JPanel form = new JPanel();
-    int filas = consultorio.isNew() ? 3 : 4;
-    form.setLayout(new GridLayout(filas, 2, 10, 10));
+    form.setLayout(new GridLayout(0, 2, 10, 10));
 
     lblId = UI.crearLabel("ID: ");
     lblNombre = UI.crearLabel("Nombre: ");
     lblDireccion = UI.crearLabel("Dirección: ");
+
+    Consultorio consultorio = (Consultorio)entidad;
 
     txtId = UI.construirTextField(String.valueOf(consultorio.getId()));
     txtId.setEditable(false);
@@ -58,21 +59,13 @@ public class PanelFormularioConsultorio extends JPanel {
     return form;
   }
 
-  private JPanel construirBotones() {
-    JPanel botones = new JPanel();
+  /**
+   * Acción a ejecutar cuando se presiona el botón guardar
+   * @param _event evento
+   */
+  protected void accionGuardar(ActionEvent _event) {
+    Consultorio consultorio = (Consultorio)entidad;
 
-    JButton btnGuardar = new JButton("Guardar");
-    btnGuardar.addActionListener(e -> accionGuardar(e));
-    botones.add(btnGuardar);
-
-    JButton btnCancelar = new JButton("Cancelar");
-    btnCancelar.addActionListener(e -> accionCancelar(e));
-    botones.add(btnCancelar);
-
-    return botones;
-  }
-
-  private void accionGuardar(ActionEvent _event) {
     consultorio.setNombre(txtNombre.getText());
     consultorio.setDirección(txtDireccion.getText());
 
@@ -87,7 +80,20 @@ public class PanelFormularioConsultorio extends JPanel {
     }
   }
 
-  private void accionCancelar(ActionEvent _event) {
+  /**
+   * Acción a ejecutar cuando se presiona el botón cancelar
+   * @param _event evento
+   */
+  protected void accionCancelar(ActionEvent _event) {
     controlador.visualizarConsultorios();
+  }
+
+  /**
+   * Devuelve la clase de la entidad referente al formulario
+   * @return clase de la entidad
+   */
+  @Override
+  public Class getEntityClass() {
+    return Consultorio.class;
   }
 }
