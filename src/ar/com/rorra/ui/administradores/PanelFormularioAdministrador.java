@@ -104,11 +104,11 @@ public class PanelFormularioAdministrador extends JPanel {
     administrador.setTelefono(txtTelefono.getText());
 
     if (administrador.isNew()) {
-      if (controlador.insertarAdministrador(administrador)) {
+      if (controlador.insertarEntidad(administrador)) {
         controlador.getFramePrincipal().visualizarAdministradores();
       }
     } else {
-      if (controlador.modificarAdministrador(administrador)) {
+      if (controlador.modificarEntidad(administrador)) {
         controlador.getFramePrincipal().visualizarAdministradores();
       }
     }

@@ -1,6 +1,7 @@
 package ar.com.rorra.ui.obrasSociales;
 
 import ar.com.rorra.controlador.Controlador;
+import ar.com.rorra.entidad.IEntidad;
 import ar.com.rorra.entidad.ObraSocial;
 
 import javax.swing.*;
@@ -33,8 +34,8 @@ public class PanelObrasSociales extends JPanel {
     entityList = new JList();
 
     listModel = new DefaultListModel<>();
-    for (ObraSocial entidad : controlador.listarObrasSociales()) {
-      listModel.addElement(entidad);
+    for (IEntidad entidad : controlador.listarEntidades(ObraSocial.class)) {
+      listModel.addElement((ObraSocial) entidad);
     }
     entityList.setModel(listModel);
 
@@ -82,7 +83,7 @@ public class PanelObrasSociales extends JPanel {
   }
 
   private void accionEliminar(ActionEvent _event) {
-    if (controlador.eliminarObraSocial((ObraSocial) entityList.getSelectedValue())) {
+    if (controlador.eliminarEntidad((ObraSocial) entityList.getSelectedValue())) {
       listModel.removeElement(entityList.getSelectedValue());
     }
   }

@@ -2,6 +2,7 @@ package ar.com.rorra.ui.administradores;
 
 import ar.com.rorra.controlador.Controlador;
 import ar.com.rorra.entidad.Administrador;
+import ar.com.rorra.entidad.IEntidad;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,8 +34,8 @@ public class PanelAdministradores extends JPanel {
     entityList = new JList();
 
     listModel = new DefaultListModel<>();
-    for (Administrador entidad : controlador.listarAdministradores()) {
-      listModel.addElement(entidad);
+    for (IEntidad entidad : controlador.listarEntidades(Administrador.class)) {
+      listModel.addElement((Administrador) entidad);
     }
     entityList.setModel(listModel);
 
@@ -82,7 +83,7 @@ public class PanelAdministradores extends JPanel {
   }
 
   private void accionEliminar(ActionEvent _event) {
-    if (controlador.eliminarAdministrador((Administrador) entityList.getSelectedValue())) {
+    if (controlador.eliminarEntidad((Administrador) entityList.getSelectedValue())) {
       listModel.removeElement(entityList.getSelectedValue());
     }
   }

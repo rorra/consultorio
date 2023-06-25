@@ -1,5 +1,6 @@
 package ar.com.rorra.ui.turnos;
 
+import ar.com.rorra.entidad.IEntidad;
 import ar.com.rorra.entidad.Turno;
 import ar.com.rorra.controlador.Controlador;
 
@@ -33,8 +34,8 @@ public class PanelTurnos extends JPanel {
     entityList = new JList();
 
     listModel = new DefaultListModel<>();
-    for (Turno entidad : controlador.listarTurnos()) {
-      listModel.addElement(entidad);
+    for (IEntidad entidad : controlador.listarEntidades(Turno.class)) {
+      listModel.addElement((Turno) entidad);
     }
     entityList.setModel(listModel);
 
@@ -82,7 +83,7 @@ public class PanelTurnos extends JPanel {
   }
 
   private void accionEliminar(ActionEvent _event) {
-    if (controlador.eliminarTurno((Turno) entityList.getSelectedValue())) {
+    if (controlador.eliminarEntidad((Turno) entityList.getSelectedValue())) {
       listModel.removeElement(entityList.getSelectedValue());
     }
   }

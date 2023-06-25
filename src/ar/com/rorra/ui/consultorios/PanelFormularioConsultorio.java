@@ -77,11 +77,11 @@ public class PanelFormularioConsultorio extends JPanel {
     consultorio.setDirección(txtDireccion.getText());
 
     if (consultorio.isNew()) {
-      if (controlador.insertarConsultorio(consultorio)) {
+      if (controlador.insertarEntidad(consultorio)) {
         controlador.getFramePrincipal().visualizarConsultorios();
       }
     } else {
-      if (controlador.modificarConsultorio(consultorio)) {
+      if (controlador.modificarEntidad(consultorio)) {
         controlador.getFramePrincipal().visualizarConsultorios();
       }
     }

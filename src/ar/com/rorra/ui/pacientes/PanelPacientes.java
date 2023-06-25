@@ -1,5 +1,6 @@
 package ar.com.rorra.ui.pacientes;
 
+import ar.com.rorra.entidad.IEntidad;
 import ar.com.rorra.entidad.Paciente;
 import ar.com.rorra.controlador.Controlador;
 
@@ -33,8 +34,8 @@ public class PanelPacientes extends JPanel {
     entityList = new JList();
 
     listModel = new DefaultListModel<>();
-    for (Paciente entidad : controlador.listarPacientes()) {
-      listModel.addElement(entidad);
+    for (IEntidad entidad : controlador.listarEntidades(Paciente.class)) {
+      listModel.addElement((Paciente) entidad);
     }
     entityList.setModel(listModel);
 
@@ -82,7 +83,7 @@ public class PanelPacientes extends JPanel {
   }
 
   private void accionEliminar(ActionEvent _event) {
-    if (controlador.eliminarPaciente((Paciente) entityList.getSelectedValue())) {
+    if (controlador.eliminarEntidad((Paciente) entityList.getSelectedValue())) {
       listModel.removeElement(entityList.getSelectedValue());
     }
   }

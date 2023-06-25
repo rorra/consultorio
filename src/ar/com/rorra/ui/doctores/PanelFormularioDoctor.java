@@ -3,6 +3,7 @@ package ar.com.rorra.ui.doctores;
 import ar.com.rorra.controlador.Controlador;
 import ar.com.rorra.entidad.Consultorio;
 import ar.com.rorra.entidad.Doctor;
+import ar.com.rorra.entidad.IEntidad;
 import ar.com.rorra.util.UI;
 
 import javax.swing.*;
@@ -107,8 +108,8 @@ public class PanelFormularioDoctor extends JPanel {
     lstConsultorios = new JList();
 
     listModel = new DefaultListModel<>();
-    for (Consultorio entidad : controlador.listarConsultorios()) {
-      listModel.addElement(entidad);
+    for (IEntidad entidad : controlador.listarEntidades(Consultorio.class)) {
+      listModel.addElement((Consultorio) entidad);
     }
     lstConsultorios.setModel(listModel);
 
@@ -156,11 +157,11 @@ public class PanelFormularioDoctor extends JPanel {
     }
 
     if (doctor.isNew()) {
-      if (controlador.insertarDoctor(doctor)) {
+      if (controlador.insertarEntidad(doctor)) {
         controlador.getFramePrincipal().visualizarDoctores();
       }
     } else {
-      if (controlador.modificarDoctor(doctor)) {
+      if (controlador.modificarEntidad(doctor)) {
         controlador.getFramePrincipal().visualizarDoctores();
       }
     }

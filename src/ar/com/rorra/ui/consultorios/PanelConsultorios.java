@@ -2,6 +2,7 @@ package ar.com.rorra.ui.consultorios;
 
 import ar.com.rorra.controlador.Controlador;
 import ar.com.rorra.entidad.Consultorio;
+import ar.com.rorra.entidad.IEntidad;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,8 +34,8 @@ public class PanelConsultorios extends JPanel {
     entityList = new JList();
 
     listModel = new DefaultListModel<>();
-    for (Consultorio entidad : controlador.listarConsultorios()) {
-      listModel.addElement(entidad);
+    for (IEntidad entidad : controlador.listarEntidades(Consultorio.class)) {
+      listModel.addElement((Consultorio) entidad);
     }
     entityList.setModel(listModel);
 
@@ -82,7 +83,7 @@ public class PanelConsultorios extends JPanel {
   }
 
   private void accionEliminar(ActionEvent _event) {
-    if (controlador.eliminarConsultorio((Consultorio) entityList.getSelectedValue())) {
+    if (controlador.eliminarEntidad((Consultorio) entityList.getSelectedValue())) {
       listModel.removeElement(entityList.getSelectedValue());
     }
   }

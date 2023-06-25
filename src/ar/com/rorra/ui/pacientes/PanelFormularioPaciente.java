@@ -1,6 +1,7 @@
 package ar.com.rorra.ui.pacientes;
 
 import ar.com.rorra.controlador.Controlador;
+import ar.com.rorra.entidad.IEntidad;
 import ar.com.rorra.entidad.ObraSocial;
 import ar.com.rorra.entidad.Paciente;
 import ar.com.rorra.util.UI;
@@ -89,8 +90,8 @@ public class PanelFormularioPaciente extends JPanel {
     lstObrasSociales = new JList();
 
     listModel = new DefaultListModel<>();
-    for (ObraSocial entidad : controlador.listarObrasSociales()) {
-      listModel.addElement(entidad);
+    for (IEntidad entidad : controlador.listarEntidades(ObraSocial.class)) {
+      listModel.addElement((ObraSocial) entidad);
     }
     lstObrasSociales.setModel(listModel);
 
@@ -132,11 +133,11 @@ public class PanelFormularioPaciente extends JPanel {
     }
 
     if (paciente.isNew()) {
-      if (controlador.insertarPaciente(paciente)) {
+      if (controlador.insertarEntidad(paciente)) {
         controlador.getFramePrincipal().visualizarPacientes();
       }
     } else {
-      if (controlador.modificarPaciente(paciente)) {
+      if (controlador.modificarEntidad(paciente)) {
         controlador.getFramePrincipal().visualizarPacientes();
       }
     }

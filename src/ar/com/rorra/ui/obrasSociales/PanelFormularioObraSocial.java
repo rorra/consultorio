@@ -84,11 +84,11 @@ public class PanelFormularioObraSocial extends JPanel {
 
 
     if (obraSocial.isNew()) {
-      if (controlador.insertarObraSocial(obraSocial)) {
+      if (controlador.insertarEntidad(obraSocial)) {
         controlador.getFramePrincipal().visualizarObrasSociales();
       }
     } else {
-      if (controlador.modificarObraSocial(obraSocial)) {
+      if (controlador.modificarEntidad(obraSocial)) {
         controlador.getFramePrincipal().visualizarObrasSociales();
       }
     }

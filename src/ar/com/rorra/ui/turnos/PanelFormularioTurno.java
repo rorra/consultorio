@@ -84,8 +84,8 @@ public class PanelFormularioTurno extends JPanel {
     lstPacientes = new JList();
 
     listPacientesModel = new DefaultListModel<>();
-    for (Paciente entidad : controlador.listarPacientes()) {
-      listPacientesModel.addElement(entidad);
+    for (IEntidad entidad : controlador.listarEntidades(Paciente.class)) {
+      listPacientesModel.addElement((Paciente) entidad);
     }
     lstPacientes.setModel(listPacientesModel);
 
@@ -98,8 +98,8 @@ public class PanelFormularioTurno extends JPanel {
     lstConsultorios = new JList();
 
     listConsultoriosModel = new DefaultListModel<>();
-    for (Consultorio entidad : controlador.listarConsultorios()) {
-      listConsultoriosModel.addElement(entidad);
+    for (IEntidad entidad : controlador.listarEntidades(Consultorio.class)) {
+      listConsultoriosModel.addElement((Consultorio) entidad);
     }
     lstConsultorios.setModel(listConsultoriosModel);
     lstConsultorios.addListSelectionListener(e -> actualizarListaDoctores());
@@ -121,8 +121,8 @@ public class PanelFormularioTurno extends JPanel {
     listDoctoresModel = new DefaultListModel<>();
 
     if (lstConsultorios.getSelectedValue() != null) {
-      for (Doctor entidad : controlador.listarDoctores(lstConsultorios.getSelectedValue())) {
-        listDoctoresModel.addElement(entidad);
+      for (IEntidad entidad : controlador.listarEntidades(Doctor.class, lstConsultorios.getSelectedValue())) {
+        listDoctoresModel.addElement((Doctor) entidad);
       }
     }
     lstDoctores.setModel(listDoctoresModel);
@@ -157,11 +157,11 @@ public class PanelFormularioTurno extends JPanel {
     }
 
     if (turno.isNew()) {
-      if (controlador.insertarTurno(turno)) {
+      if (controlador.insertarEntidad(turno)) {
         controlador.getFramePrincipal().visualizarTurnos();
       }
     } else {
-      if (controlador.modificarTurno(turno)) {
+      if (controlador.modificarEntidad(turno)) {
         controlador.getFramePrincipal().visualizarTurnos();
       }
     }
