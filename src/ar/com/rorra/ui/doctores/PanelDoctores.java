@@ -2,9 +2,9 @@ package ar.com.rorra.ui.doctores;
 
 import ar.com.rorra.entidad.Doctor;
 import ar.com.rorra.controlador.Controlador;
-import ar.com.rorra.ui.Panel;
+import ar.com.rorra.ui.PanelLista;
 
-public class PanelDoctores extends Panel {
+public class PanelDoctores extends PanelLista {
   /**
    * Constructor
    *

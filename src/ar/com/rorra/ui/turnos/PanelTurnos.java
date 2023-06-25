@@ -2,11 +2,9 @@ package ar.com.rorra.ui.turnos;
 
 import ar.com.rorra.entidad.Administrador;
 import ar.com.rorra.controlador.Controlador;
-import ar.com.rorra.ui.Panel;
+import ar.com.rorra.ui.PanelLista;
 
-import javax.swing.*;
-
-public class PanelTurnos extends Panel {
+public class PanelTurnos extends PanelLista {
   /**
    * Constructor
    *

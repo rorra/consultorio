@@ -2,9 +2,9 @@ package ar.com.rorra.ui.obrasSociales;
 
 import ar.com.rorra.controlador.Controlador;
 import ar.com.rorra.entidad.ObraSocial;
-import ar.com.rorra.ui.Panel;
+import ar.com.rorra.ui.PanelLista;
 
-public class PanelObrasSociales extends Panel {
+public class PanelObrasSociales extends PanelLista {
   /**
    * Constructor
    *
