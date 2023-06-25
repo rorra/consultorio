@@ -78,16 +78,16 @@ public class PanelFormularioConsultorio extends JPanel {
 
     if (consultorio.isNew()) {
       if (controlador.insertarEntidad(consultorio)) {
-        controlador.getFramePrincipal().visualizarConsultorios();
+        controlador.visualizarConsultorios();
       }
     } else {
       if (controlador.modificarEntidad(consultorio)) {
-        controlador.getFramePrincipal().visualizarConsultorios();
+        controlador.visualizarConsultorios();
       }
     }
   }
 
   private void accionCancelar(ActionEvent _event) {
-    controlador.getFramePrincipal().visualizarConsultorios();
+    controlador.visualizarConsultorios();
   }
 }

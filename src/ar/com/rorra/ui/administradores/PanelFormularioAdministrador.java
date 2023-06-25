@@ -105,16 +105,16 @@ public class PanelFormularioAdministrador extends JPanel {
 
     if (administrador.isNew()) {
       if (controlador.insertarEntidad(administrador)) {
-        controlador.getFramePrincipal().visualizarAdministradores();
+        controlador.visualizarAdministradores();
       }
     } else {
       if (controlador.modificarEntidad(administrador)) {
-        controlador.getFramePrincipal().visualizarAdministradores();
+        controlador.visualizarAdministradores();
       }
     }
   }
 
   private void accionCancelar(ActionEvent _event) {
-    controlador.getFramePrincipal().visualizarAdministradores();
+    controlador.visualizarAdministradores();
   }
 }

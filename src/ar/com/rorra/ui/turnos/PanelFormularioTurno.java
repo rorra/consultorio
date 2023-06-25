@@ -158,16 +158,16 @@ public class PanelFormularioTurno extends JPanel {
 
     if (turno.isNew()) {
       if (controlador.insertarEntidad(turno)) {
-        controlador.getFramePrincipal().visualizarTurnos();
+        controlador.visualizarTurnos();
       }
     } else {
       if (controlador.modificarEntidad(turno)) {
-        controlador.getFramePrincipal().visualizarTurnos();
+        controlador.visualizarTurnos();
       }
     }
   }
 
   private void accionCancelar(ActionEvent _event) {
-    controlador.getFramePrincipal().visualizarTurnos();
+    controlador.visualizarTurnos();
   }
 }

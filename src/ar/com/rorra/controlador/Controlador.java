@@ -5,6 +5,18 @@ import ar.com.rorra.dao.BaseDAO;
 import ar.com.rorra.entidad.*;
 import ar.com.rorra.exceptions.BOException;
 import ar.com.rorra.ui.FramePrincipal;
+import ar.com.rorra.ui.administradores.PanelAdministradores;
+import ar.com.rorra.ui.administradores.PanelFormularioAdministrador;
+import ar.com.rorra.ui.consultorios.PanelConsultorios;
+import ar.com.rorra.ui.consultorios.PanelFormularioConsultorio;
+import ar.com.rorra.ui.doctores.PanelDoctores;
+import ar.com.rorra.ui.doctores.PanelFormularioDoctor;
+import ar.com.rorra.ui.obrasSociales.PanelFormularioObraSocial;
+import ar.com.rorra.ui.obrasSociales.PanelObrasSociales;
+import ar.com.rorra.ui.pacientes.PanelFormularioPaciente;
+import ar.com.rorra.ui.pacientes.PanelPacientes;
+import ar.com.rorra.ui.turnos.PanelFormularioTurno;
+import ar.com.rorra.ui.turnos.PanelTurnos;
 
 import javax.swing.*;
 import java.util.List;
@@ -12,14 +24,14 @@ import java.util.Map;
 
 /**
  * Controlador principal de la aplicación.
- *
+ * <p>
  * Siguiendo la metodología de BaseDAO, definimos funciones parametrizadas para las acciones de insertar, modificar,
  * listar y eliminar las diferentes entidades.
- *
+ * <p>
  * Las Entidades, que es el modelo puro, implementa la interfaza IEntidad.
- *
+ * <p>
  * Los DAOs, que son los que se comunican con la base de datos, implementan la interfaz BaseDAO<ENTIDAD>.
- *
+ * <p>
  * Los BOs, que son los que encapsulan la lógica de negocios, implementan la clase BaseBO<ENTIDAD, DAO>.
  */
 public class Controlador {
@@ -51,6 +63,7 @@ public class Controlador {
 
   /**
    * Devuelve el frame principal de la aplicación.
+   *
    * @return
    */
   public FramePrincipal getFramePrincipal() {
@@ -59,10 +72,11 @@ public class Controlador {
 
   /**
    * Devuelve una lista de entidadedes de la base de datos
-   * @param bo BO que se encarga de la entidad
-   * @return Lista de entidades
+   *
+   * @param bo        BO que se encarga de la entidad
    * @param <ENTIDAD> El BO implementa la interfaz IEntidad
-   * @param <DAO> El BO implementa la interfaz DOA
+   * @param <DAO>     El BO implementa la interfaz DOA
+   * @return Lista de entidades
    */
   public <ENTIDAD extends IEntidad, DAO extends BaseDAO<ENTIDAD>> List<ENTIDAD> getEntidades(BaseBO<ENTIDAD, DAO> bo) {
     try {
@@ -75,11 +89,12 @@ public class Controlador {
 
   /**
    * Devuelve una lista de entidadedes de la base de datos ordenadas por un campo
-   * @param bo BO que se encarga de la entidad
+   *
+   * @param bo        BO que se encarga de la entidad
    * @param sortField Campo por el que se ordena
-   * @return Lista de entidades
    * @param <ENTIDAD> El BO implementa la interfaz IEntidad
-   * @param <DAO> El BO implementa la interfaz DOA
+   * @param <DAO>     El BO implementa la interfaz DOA
+   * @return Lista de entidades
    */
   public <ENTIDAD extends IEntidad, DAO extends BaseDAO<ENTIDAD>> List<ENTIDAD> getEntidades(BaseBO<ENTIDAD, DAO> bo, String sortField) {
     try {
@@ -92,11 +107,12 @@ public class Controlador {
 
   /**
    * Devuelve una lista de entidadedes de la base de datos que cumplen con las condiciones
-   * @param bo BO que se encarga de la entidad
+   *
+   * @param bo         BO que se encarga de la entidad
    * @param conditions Condiciones que deben cumplir las entidades
+   * @param <ENTIDAD>  El BO implementa la interfaz IEntidad
+   * @param <DAO>      El BO implementa la interfaz DOA
    * @return Lista de entidades
-   * @param <ENTIDAD> El BO implementa la interfaz IEntidad
-   * @param <DAO> El BO implementa la interfaz DOA
    */
   public <ENTIDAD extends IEntidad, DAO extends BaseDAO<ENTIDAD>> List<ENTIDAD> getEntidades(BaseBO<ENTIDAD, DAO> bo, Map<String, String> conditions) {
     try {
@@ -109,12 +125,13 @@ public class Controlador {
 
   /**
    * Guarda una entidad en la base de datos
-   * @param bo BO que se encarga de la entidad
-   * @param entity Entidad que se quiere guardar
+   *
+   * @param bo             BO que se encarga de la entidad
+   * @param entity         Entidad que se quiere guardar
    * @param successMessage Mensaje de éxito
+   * @param <ENTIDAD>      El BO implementa la interfaz IEntidad
+   * @param <DAO>          El BO implementa la interfaz DOA
    * @return true si se guardó correctamente, false si no
-   * @param <ENTIDAD> El BO implementa la interfaz IEntidad
-   * @param <DAO> El BO implementa la interfaz DOA
    */
   public <ENTIDAD extends IEntidad, DAO extends BaseDAO<ENTIDAD>> boolean saveEntidad(BaseBO<ENTIDAD, DAO> bo, ENTIDAD entity, String successMessage) {
     try {
@@ -129,12 +146,13 @@ public class Controlador {
 
   /**
    * Modifica una entidad en la base de datos
-   * @param bo BO que se encarga de la entidad
-   * @param entity Entidad que se quiere modificar
+   *
+   * @param bo             BO que se encarga de la entidad
+   * @param entity         Entidad que se quiere modificar
    * @param successMessage Mensaje de éxito
+   * @param <ENTIDAD>      El BO implementa la interfaz IEntidad
+   * @param <DAO>          El BO implementa la interfaz DOA
    * @return
-   * @param <ENTIDAD> El BO implementa la interfaz IEntidad
-   * @param <DAO> El BO implementa la interfaz DOA
    */
   public <ENTIDAD extends IEntidad, DAO extends BaseDAO<ENTIDAD>> boolean updateEntidad(BaseBO<ENTIDAD, DAO> bo, ENTIDAD entity, String successMessage) {
     try {
@@ -149,13 +167,14 @@ public class Controlador {
 
   /**
    * Elimina una entidad de la base de datos
-   * @param bo BO que se encarga de la entidad
-   * @param entity Entidad que se quiere eliminar
+   *
+   * @param bo             BO que se encarga de la entidad
+   * @param entity         Entidad que se quiere eliminar
    * @param confirmMessage Mensaje de confirmación
    * @param successMessage Mensaje de éxito
+   * @param <ENTIDAD>      El BO implementa la interfaz IEntidad
+   * @param <DAO>          El BO implementa la interfaz DOA
    * @return
-   * @param <ENTIDAD> El BO implementa la interfaz IEntidad
-   * @param <DAO> El BO implementa la interfaz DOA
    */
   public <ENTIDAD extends IEntidad, DAO extends BaseDAO<ENTIDAD>> boolean deleteEntidad(BaseBO<ENTIDAD, DAO> bo, ENTIDAD entity, String confirmMessage, String successMessage) {
     try {
@@ -175,10 +194,11 @@ public class Controlador {
 
   /**
    * Función parametrizada para listar las entidades.
-   * @param klass Clase de la entidad a listar.
+   *
+   * @param klass     Clase de la entidad a listar.
    * @param sortField Campo por el cual se ordenará la lista.
+   * @param <T>       Clase de la entidad a listar.
    * @return Lista de entidades.
-   * @param <T> Clase de la entidad a listar.
    */
   public <T extends IEntidad> List<T> listarEntidades(Class klass, String sortField) {
     if (klass == Administrador.class) {
@@ -200,10 +220,11 @@ public class Controlador {
 
   /**
    * Función parametrizada para listar las entidades.
-   * @param klass Clase de la entidad a listar.
+   *
+   * @param klass  Clase de la entidad a listar.
    * @param filter Filtro para la lista.
+   * @param <T>    Clase de la entidad a listar.
    * @return Lista de entidades.
-   * @param <T> Clase de la entidad a listar.
    */
   public <T extends IEntidad> List<T> listarEntidades(Class klass, IEntidad filter) {
     if (klass == Doctor.class) {
@@ -217,9 +238,10 @@ public class Controlador {
 
   /**
    * Función parametrizada para listar las entidades.
+   *
    * @param klass Clase de la entidad a listar.
+   * @param <T>   Clase de la entidad a listar.
    * @return Lista de entidades.
-   * @param <T> Clase de la entidad a listar.
    */
   public <T extends IEntidad> List<T> listarEntidades(Class klass) {
     return listarEntidades(klass, (String) null);
@@ -227,67 +249,161 @@ public class Controlador {
 
   /**
    * Inserta una entidad en la base de datos
+   *
    * @param entidad Entidad a insertar
    * @return true si se insertó correctamente, false en caso contrario
    */
   public boolean insertarEntidad(IEntidad entidad) {
     if (entidad instanceof Administrador) {
-      return saveEntidad(administradorBO, (Administrador)entidad, "Se creó el administrador.");
+      return saveEntidad(administradorBO, (Administrador) entidad, "Se creó el administrador.");
     } else if (entidad instanceof Consultorio) {
-      return saveEntidad(consultorioBO, (Consultorio)entidad, "Se creó el consultorio.");
+      return saveEntidad(consultorioBO, (Consultorio) entidad, "Se creó el consultorio.");
     } else if (entidad instanceof Doctor) {
-      return saveEntidad(doctorBO, (Doctor)entidad, "Se creó el doctor.");
+      return saveEntidad(doctorBO, (Doctor) entidad, "Se creó el doctor.");
     } else if (entidad instanceof ObraSocial) {
-      return saveEntidad(obraSocialBO, (ObraSocial)entidad, "Se creó la obra social.");
+      return saveEntidad(obraSocialBO, (ObraSocial) entidad, "Se creó la obra social.");
     } else if (entidad instanceof Paciente) {
-      return saveEntidad(pacienteBO, (Paciente)entidad, "Se creó el paciente.");
+      return saveEntidad(pacienteBO, (Paciente) entidad, "Se creó el paciente.");
     } else if (entidad instanceof Turno) {
-      return saveEntidad(turnoBO, (Turno)entidad, "Se creó el turno.");
+      return saveEntidad(turnoBO, (Turno) entidad, "Se creó el turno.");
     }
     return false;
   }
 
   /**
    * Modifica una entidad en la base de datos
+   *
    * @param entidad Entidad a modificar
    * @return true si se modificó correctamente, false en caso contrario
    */
   public boolean modificarEntidad(IEntidad entidad) {
     if (entidad instanceof Administrador) {
-      return updateEntidad(administradorBO, (Administrador)entidad, "Se modificó el administrador.");
+      return updateEntidad(administradorBO, (Administrador) entidad, "Se modificó el administrador.");
     } else if (entidad instanceof Consultorio) {
-      return updateEntidad(consultorioBO, (Consultorio)entidad, "Se modificó el consultorio.");
+      return updateEntidad(consultorioBO, (Consultorio) entidad, "Se modificó el consultorio.");
     } else if (entidad instanceof Doctor) {
-      return updateEntidad(doctorBO, (Doctor)entidad, "Se modificó el doctor.");
+      return updateEntidad(doctorBO, (Doctor) entidad, "Se modificó el doctor.");
     } else if (entidad instanceof ObraSocial) {
-      return updateEntidad(obraSocialBO, (ObraSocial)entidad, "Se modificó la obra social.");
+      return updateEntidad(obraSocialBO, (ObraSocial) entidad, "Se modificó la obra social.");
     } else if (entidad instanceof Paciente) {
-      return updateEntidad(pacienteBO, (Paciente)entidad, "Se modificó el paciente.");
+      return updateEntidad(pacienteBO, (Paciente) entidad, "Se modificó el paciente.");
     } else if (entidad instanceof Turno) {
-      return updateEntidad(turnoBO, (Turno)entidad, "Se modificó el turno.");
+      return updateEntidad(turnoBO, (Turno) entidad, "Se modificó el turno.");
     }
     return false;
   }
 
   /**
    * Elimina una entidad en la base de datos
+   *
    * @param entidad Entidad a eliminar
    * @return true si se eliminó correctamente, false en caso contrario
    */
   public boolean eliminarEntidad(IEntidad entidad) {
     if (entidad instanceof Administrador) {
-      return deleteEntidad(administradorBO, (Administrador)entidad, "Eliminar el administrador ", "Se eliminó el administrador.");
+      return deleteEntidad(administradorBO, (Administrador) entidad, "Eliminar el administrador ", "Se eliminó el administrador.");
     } else if (entidad instanceof Consultorio) {
-      return deleteEntidad(consultorioBO, (Consultorio)entidad, "Eliminar el consultorio ", "Se eliminó el consultorio.");
+      return deleteEntidad(consultorioBO, (Consultorio) entidad, "Eliminar el consultorio ", "Se eliminó el consultorio.");
     } else if (entidad instanceof Doctor) {
-      return deleteEntidad(doctorBO, (Doctor)entidad, "Eliminar el doctor ", "Se eliminó el doctor.");
+      return deleteEntidad(doctorBO, (Doctor) entidad, "Eliminar el doctor ", "Se eliminó el doctor.");
     } else if (entidad instanceof ObraSocial) {
-      return deleteEntidad(obraSocialBO, (ObraSocial)entidad, "Eliminar la obra social ", "Se eliminó la obra social.");
+      return deleteEntidad(obraSocialBO, (ObraSocial) entidad, "Eliminar la obra social ", "Se eliminó la obra social.");
     } else if (entidad instanceof Paciente) {
-      return deleteEntidad(pacienteBO, (Paciente)entidad, "Eliminar el paciente ", "Se eliminó el paciente.");
+      return deleteEntidad(pacienteBO, (Paciente) entidad, "Eliminar el paciente ", "Se eliminó el paciente.");
     } else if (entidad instanceof Turno) {
-      return deleteEntidad(turnoBO, (Turno)entidad, "Eliminar el turno ", "Se eliminó el turno.");
+      return deleteEntidad(turnoBO, (Turno) entidad, "Eliminar el turno ", "Se eliminó el turno.");
     }
     return false;
+  }
+
+  /**
+   * Función parametrizada para mostrar un panel para una entidad que se esta creando
+   *
+   * @param klass
+   */
+  public void panelNuevaEntidad(Class klass) {
+    if (klass == Administrador.class) {
+      getFramePrincipal().setPanel(new PanelFormularioAdministrador(this, new Administrador()));
+    } else if (klass == Consultorio.class) {
+      getFramePrincipal().setPanel(new PanelFormularioConsultorio(this, new Consultorio()));
+    } else if (klass == Doctor.class) {
+      getFramePrincipal().setPanel(new PanelFormularioDoctor(this, new Doctor()));
+    } else if (klass == ObraSocial.class) {
+      getFramePrincipal().setPanel(new PanelFormularioObraSocial(this, new ObraSocial()));
+    } else if (klass == Paciente.class) {
+      getFramePrincipal().setPanel(new PanelFormularioPaciente(this, new Paciente()));
+    } else if (klass == Turno.class) {
+      getFramePrincipal().setPanel(new PanelFormularioTurno(this, new Turno()));
+    }
+  }
+
+  /**
+   * Función parametrizada para mostrar un panel para una entidad que se esta modificando
+   *
+   * @param entidad Entidad a modificar
+   */
+  public void panelModificarEntidad(IEntidad entidad) {
+    if (entidad instanceof Administrador) {
+      getFramePrincipal().setPanel(new PanelFormularioAdministrador(this, (Administrador) entidad));
+    } else if (entidad instanceof Consultorio) {
+      getFramePrincipal().setPanel(new PanelFormularioConsultorio(this, (Consultorio) entidad));
+    } else if (entidad instanceof Doctor) {
+      getFramePrincipal().setPanel(new PanelFormularioDoctor(this, (Doctor) entidad));
+    } else if (entidad instanceof ObraSocial) {
+      getFramePrincipal().setPanel(new PanelFormularioObraSocial(this, (ObraSocial) entidad));
+    } else if (entidad instanceof Paciente) {
+      getFramePrincipal().setPanel(new PanelFormularioPaciente(this, (Paciente) entidad));
+    } else if (entidad instanceof Turno) {
+      getFramePrincipal().setPanel(new PanelFormularioTurno(this, (Turno) entidad));
+    }
+  }
+
+  /**
+   * Muestra la pantalla principal
+   */
+  public void visualizarPantallaPrincipal() {
+    getFramePrincipal().pantallaPrincipal();
+  }
+
+  /**
+   * Muestra el ABM de administradores
+   */
+  public void visualizarAdministradores() {
+    framePrincipal.visualizarPanel(new PanelAdministradores(this));
+  }
+
+  /**
+   * Muestra el ABM de Consultorios
+   */
+  public void visualizarConsultorios() {
+    framePrincipal.visualizarPanel(new PanelConsultorios(this));
+  }
+
+  /**
+   * Muestra el ABM de doctores
+   */
+  public void visualizarDoctores() {
+    framePrincipal.visualizarPanel(new PanelDoctores(this));
+  }
+
+  /**
+   * Muestra el ABM de Obras Sociales
+   */
+  public void visualizarObrasSociales() {
+    framePrincipal.visualizarPanel(new PanelObrasSociales(this));
+  }
+
+  /**
+   * Muestra el ABM de pacientes
+   */
+  public void visualizarPacientes() {
+    framePrincipal.visualizarPanel(new PanelPacientes(this));
+  }
+
+  /**
+   * Muestra el ABM de turnos
+   */
+  public void visualizarTurnos() {
+    framePrincipal.visualizarPanel(new PanelTurnos(this));
   }
 }

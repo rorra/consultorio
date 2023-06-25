@@ -16,6 +16,10 @@ import java.util.ArrayList;
 public class FramePrincipal extends JFrame {
   private Controlador controlador;
 
+  /**
+   * El constructor crea el frame principal y lo muestra en pantalla
+   * @param controlador
+   */
   public FramePrincipal(Controlador controlador) {
     super("Consultorio V1.0");
 
@@ -32,6 +36,10 @@ public class FramePrincipal extends JFrame {
     setVisible(true);
   }
 
+  /**
+   * Setea el título del frame principal
+   * @param titulo El título a setear
+   */
   public void setTitulo(String titulo) {
     if (titulo != null) {
       setTitle("Consultorio V1.0 - " + titulo);
@@ -40,6 +48,9 @@ public class FramePrincipal extends JFrame {
     }
   }
 
+  /**
+   * Construye el formulario principal de la aplicación
+   */
   public void pantallaPrincipal() {
     JPanel panel = new JPanel();
 
@@ -59,12 +70,12 @@ public class FramePrincipal extends JFrame {
     JButton btnSalir = new JButton("Salir");
     botones.add(btnSalir);
 
-    btnGestionarAdministradores.addActionListener(e -> visualizarAdministradores());
-    btnGestionarConsultorios.addActionListener(e -> visualizarConsultorios());
-    btnGestionarDoctores.addActionListener(e -> visualizarDoctores());
-    btnGestionarObrasSociales.addActionListener(e -> visualizarObrasSociales());
-    btnGestionarPacientes.addActionListener(e -> visualizarPacientes());
-    btnGestionarTurnos.addActionListener(e -> visualizarTurnos());
+    btnGestionarAdministradores.addActionListener(e -> controlador.visualizarAdministradores());
+    btnGestionarConsultorios.addActionListener(e -> controlador.visualizarConsultorios());
+    btnGestionarDoctores.addActionListener(e -> controlador.visualizarDoctores());
+    btnGestionarObrasSociales.addActionListener(e -> controlador.visualizarObrasSociales());
+    btnGestionarPacientes.addActionListener(e -> controlador.visualizarPacientes());
+    btnGestionarTurnos.addActionListener(e -> controlador.visualizarTurnos());
     btnSalir.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
     panel.setLayout(new GridLayout(botones.size(), 1));
@@ -77,6 +88,10 @@ public class FramePrincipal extends JFrame {
     setPanel(panel);
   }
 
+  /**
+   * Visualiza un pantel en el content pane del frame principal
+   * @param panel El panel a visualizar
+   */
   public void setPanel(JPanel panel) {
     GridLayout constraints = new GridLayout(1, 1);
 
@@ -85,6 +100,10 @@ public class FramePrincipal extends JFrame {
     getContentPane().revalidate();
   }
 
+  /**
+   * Menú principal de la aplicación
+   * @return El menú principal
+   */
   private JMenuBar crearMenu() {
     JMenuBar menuBar = new JMenuBar();
 
@@ -97,10 +116,10 @@ public class FramePrincipal extends JFrame {
     JMenuItem mnuTurnos = new JMenuItem("Gestionar Turnos", 'T');
     JMenuItem mnuSalir = new JMenuItem("Salir", 'S');
 
-    mnuAdministradores.addActionListener(e -> visualizarAdministradores());
-    mnuDoctores.addActionListener(e -> visualizarDoctores());
-    mnuPacientes.addActionListener(e -> visualizarPacientes());
-    mnuTurnos.addActionListener(e -> visualizarTurnos());
+    mnuAdministradores.addActionListener(e -> controlador.visualizarAdministradores());
+    mnuDoctores.addActionListener(e -> controlador.visualizarDoctores());
+    mnuPacientes.addActionListener(e -> controlador.visualizarPacientes());
+    mnuTurnos.addActionListener(e -> controlador.visualizarTurnos());
     mnuSalir.addActionListener(e -> salir());
 
     mnuArchivo.add(mnuDoctores);
@@ -116,18 +135,35 @@ public class FramePrincipal extends JFrame {
     return menuBar;
   }
 
+  /**
+   * Muestra un mensaje de información en pantalla
+   * @param mensaje El mensaje de información
+   */
   public void visualizarInformacion(String mensaje) {
     JOptionPane.showMessageDialog(this, mensaje, "Información", JOptionPane.INFORMATION_MESSAGE);
   }
 
+  /**
+   * Muestra un mensaje de error en pantalla
+   * @param error El mensaje de error
+   */
   public void visualizarError(String error) {
     JOptionPane.showMessageDialog(this, error, "Error", JOptionPane.ERROR_MESSAGE);
   }
 
+  /**
+   * Muestra un mensaje de error en pantalla
+   * @param error La excepción que se produjo
+   */
   public void visualizarError(Exception error) {
     JOptionPane.showMessageDialog(this, error.getLocalizedMessage(), "Error", JOptionPane.ERROR_MESSAGE);
   }
 
+  /**
+   * Visualiza un panel en el content pane del frame principal
+   * @param panel El panel a visualizar
+   * @param <T> El tipo de panel a visualizar
+   */
   public<T extends JPanel> void visualizarPanel(T panel) {
     try {
       setPanel(panel);
@@ -136,30 +172,9 @@ public class FramePrincipal extends JFrame {
     }
   }
 
-  public void visualizarAdministradores() {
-    visualizarPanel(new PanelAdministradores(controlador));
-  }
-
-  public void visualizarConsultorios() {
-    visualizarPanel(new PanelConsultorios(controlador));
-  }
-
-  public void visualizarDoctores() {
-    visualizarPanel(new PanelDoctores(controlador));
-  }
-
-  public void visualizarObrasSociales() {
-    visualizarPanel(new PanelObrasSociales(controlador));
-  }
-
-  public void visualizarPacientes() {
-    visualizarPanel(new PanelPacientes(controlador));
-  }
-
-  public void visualizarTurnos() {
-    visualizarPanel(new PanelTurnos(controlador));
-  }
-
+  /**
+   * Cierra la aplicación
+   */
   public void salir() {
     dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
   }

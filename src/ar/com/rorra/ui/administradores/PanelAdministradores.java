@@ -75,11 +75,11 @@ public class PanelAdministradores extends JPanel {
   }
 
   private void accionNuevo(ActionEvent _event) {
-    controlador.getFramePrincipal().setPanel(new PanelFormularioAdministrador(controlador, new Administrador()));
+    controlador.panelNuevaEntidad(Administrador.class);
   }
 
   private void accionModificar(ActionEvent _event) {
-    controlador.getFramePrincipal().setPanel(new PanelFormularioAdministrador(controlador, (Administrador) entityList.getSelectedValue()));
+    controlador.panelModificarEntidad((Administrador) entityList.getSelectedValue());
   }
 
   private void accionEliminar(ActionEvent _event) {
@@ -89,6 +89,6 @@ public class PanelAdministradores extends JPanel {
   }
 
   private void accionVolver(ActionEvent _event) {
-    controlador.getFramePrincipal().pantallaPrincipal();
+    controlador.visualizarPantallaPrincipal();
   }
 }

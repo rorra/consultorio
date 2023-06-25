@@ -158,16 +158,16 @@ public class PanelFormularioDoctor extends JPanel {
 
     if (doctor.isNew()) {
       if (controlador.insertarEntidad(doctor)) {
-        controlador.getFramePrincipal().visualizarDoctores();
+        controlador.visualizarDoctores();
       }
     } else {
       if (controlador.modificarEntidad(doctor)) {
-        controlador.getFramePrincipal().visualizarDoctores();
+        controlador.visualizarDoctores();
       }
     }
   }
 
   private void accionCancelar(ActionEvent _event) {
-    controlador.getFramePrincipal().visualizarDoctores();
+    controlador.visualizarDoctores();
   }
 }

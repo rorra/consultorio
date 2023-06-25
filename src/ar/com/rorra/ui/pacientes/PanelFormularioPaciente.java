@@ -134,16 +134,16 @@ public class PanelFormularioPaciente extends JPanel {
 
     if (paciente.isNew()) {
       if (controlador.insertarEntidad(paciente)) {
-        controlador.getFramePrincipal().visualizarPacientes();
+        controlador.visualizarPacientes();
       }
     } else {
       if (controlador.modificarEntidad(paciente)) {
-        controlador.getFramePrincipal().visualizarPacientes();
+        controlador.visualizarPacientes();
       }
     }
   }
 
   private void accionCancelar(ActionEvent _event) {
-    controlador.getFramePrincipal().visualizarPacientes();
+    controlador.visualizarPacientes();
   }
 }
