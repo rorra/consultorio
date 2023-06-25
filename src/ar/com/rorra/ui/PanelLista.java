@@ -17,6 +17,7 @@ public abstract class PanelLista extends Panel {
   protected JButton btnModificar;
   protected JButton btnEliminar;
   protected JButton btnVolver;
+  protected JPanel botones;
   protected JList entityList;
   protected JScrollPane scrollPane;
   protected DefaultListModel<IEntidad> listModel;
@@ -32,7 +33,7 @@ public abstract class PanelLista extends Panel {
     setLayout(new BorderLayout());
 
     construirLista();
-    JPanel botones = construirBotones();
+    construirBotones();
 
     add(scrollPane, BorderLayout.CENTER);
     add(botones, BorderLayout.SOUTH);
@@ -76,8 +77,8 @@ public abstract class PanelLista extends Panel {
    * Construye los botones de la pantalla
    * @return panel con los botones
    */
-  protected JPanel construirBotones() {
-    JPanel botones = new JPanel();
+  protected void construirBotones() {
+    botones = new JPanel();
 
     btnNuevo = new JButton("Nuevo " + this.getEntityName());
     btnNuevo.addActionListener(e -> accionNuevo(e));
@@ -96,8 +97,6 @@ public abstract class PanelLista extends Panel {
     btnVolver = new JButton("Volver");
     btnVolver.addActionListener(e -> accionVolver(e));
     botones.add(btnVolver);
-
-    return botones;
   }
 
   /**
@@ -131,6 +130,6 @@ public abstract class PanelLista extends Panel {
    * @param _event
    */
   protected void accionVolver(ActionEvent _event) {
-    controlador.visualizarPantallaPrincipal();
+    controlador.visualizarMenuPrincipal();
   }
 }

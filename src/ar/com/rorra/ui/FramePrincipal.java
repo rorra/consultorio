@@ -67,6 +67,8 @@ public class FramePrincipal extends JFrame {
     botones.add(btnGestionarPacientes);
     JButton btnGestionarTurnos = new JButton("Gestionar turnos");
     botones.add(btnGestionarTurnos);
+    JButton btnReportes = new JButton("Reportes");
+    botones.add(btnReportes);
     JButton btnSalir = new JButton("Salir");
     botones.add(btnSalir);
 
@@ -76,6 +78,7 @@ public class FramePrincipal extends JFrame {
     btnGestionarObrasSociales.addActionListener(e -> controlador.visualizarObrasSociales());
     btnGestionarPacientes.addActionListener(e -> controlador.visualizarPacientes());
     btnGestionarTurnos.addActionListener(e -> controlador.visualizarTurnos());
+    btnReportes.addActionListener(e -> controlador.visualizarReportes());
     btnSalir.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
     panel.setLayout(new GridLayout(botones.size(), 1));
@@ -114,12 +117,14 @@ public class FramePrincipal extends JFrame {
     JMenuItem mnuDoctores = new JMenuItem("Gestionar Doctores", 'D');
     JMenuItem mnuPacientes = new JMenuItem("Gestionar Pacientes", 'P');
     JMenuItem mnuTurnos = new JMenuItem("Gestionar Turnos", 'T');
+    JMenuItem mnuReportes = new JMenuItem("Reportes", 'R');
     JMenuItem mnuSalir = new JMenuItem("Salir", 'S');
 
     mnuAdministradores.addActionListener(e -> controlador.visualizarAdministradores());
     mnuDoctores.addActionListener(e -> controlador.visualizarDoctores());
     mnuPacientes.addActionListener(e -> controlador.visualizarPacientes());
     mnuTurnos.addActionListener(e -> controlador.visualizarTurnos());
+    mnuReportes.addActionListener(e -> controlador.visualizarReportes());
     mnuSalir.addActionListener(e -> salir());
 
     mnuArchivo.add(mnuDoctores);

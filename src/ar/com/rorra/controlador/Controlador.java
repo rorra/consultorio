@@ -15,6 +15,7 @@ import ar.com.rorra.ui.obrasSociales.PanelFormularioObraSocial;
 import ar.com.rorra.ui.obrasSociales.PanelObrasSociales;
 import ar.com.rorra.ui.pacientes.PanelFormularioPaciente;
 import ar.com.rorra.ui.pacientes.PanelPacientes;
+import ar.com.rorra.ui.reportes.FormularioReporte;
 import ar.com.rorra.ui.turnos.PanelFormularioTurno;
 import ar.com.rorra.ui.turnos.PanelTurnos;
 
@@ -361,7 +362,7 @@ public class Controlador {
   /**
    * Muestra la pantalla principal
    */
-  public void visualizarPantallaPrincipal() {
+  public void visualizarMenuPrincipal() {
     getFramePrincipal().pantallaPrincipal();
   }
 
@@ -405,5 +406,12 @@ public class Controlador {
    */
   public void visualizarTurnos() {
     framePrincipal.visualizarPanel(new PanelTurnos(this));
+  }
+
+  /**
+   * Visualiza el formulario de reportes
+   */
+  public void visualizarReportes() {
+    framePrincipal.visualizarPanel(new FormularioReporte(this));
   }
 }
