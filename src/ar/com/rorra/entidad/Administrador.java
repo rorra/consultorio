@@ -36,4 +36,20 @@ public class Administrador extends Empleado implements IEntidad {
   public Administrador(int id, String email, String password, int legajo, String nombre, String telefono) {
     super(id, email, password, legajo, nombre, telefono);
   }
+
+  /**
+   * Devuelve el nombre de la entidad
+   * @return Nombre de la entidad
+   */
+  public static String getEntityName() {
+    return "Administrador";
+  }
+
+  /**
+   * Devuelve el nombre de la entidad en plural
+   * @return Nombre de la entidad en plural
+   */
+  public static String getEntityNamePlural() {
+    return "Administradores";
+  }
 }

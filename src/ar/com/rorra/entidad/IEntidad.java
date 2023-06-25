@@ -24,4 +24,22 @@ public interface IEntidad {
    * @return
    */
   public boolean isNew();
+
+  /**
+   * Retorna el nombre de la entidad
+   *
+   * @return Nombre de la entidad
+   */
+  public static String getEntityName() {
+    return "Entidad";
+  }
+
+  /**
+   * Retorna el nombre de la entidad en plural
+   *
+   * @return Nombre de la entidad en plural
+   */
+  public static String getEntityNamePlural() {
+    return "Entidades";
+  }
 }

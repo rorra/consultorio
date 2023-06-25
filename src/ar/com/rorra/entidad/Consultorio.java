@@ -86,8 +86,28 @@ public class Consultorio extends Entidad implements IEntidad {
     return ((Consultorio)other).getId() == this.getId();
   }
 
+  /**
+   * Retorna una representación de la entidad para visualizar
+   * @return Representación de la entidad para visualizar
+   */
   @Override
   public String toString() {
     return nombre + " - " + dirección;
+  }
+
+  /**
+   * Retorna el nombre de la entidad
+   * @return Nombre de la entidad
+   */
+  public static String getEntityName() {
+    return "Consultorio";
+  }
+
+  /**
+   * Retorna el nombre de la entidad en plural
+   * @return Nombre de la entidad en plural
+   */
+  public static String getEntityNamePlural() {
+    return "Consultorios";
   }
 }

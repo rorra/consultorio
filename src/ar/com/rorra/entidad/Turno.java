@@ -123,4 +123,20 @@ public class Turno extends Entidad implements IEntidad {
   public String toString() {
     return Dates.format(fecha) + " - " + doctor.getNombre() + " - " + paciente.getNombre() + " (" + paciente.getDni() + ")";
   }
+
+  /**
+   * Devuelve el nombre de la entidad
+   * @return Nombre de la entidad
+   */
+  public static String getEntityName() {
+    return "Turno";
+  }
+
+  /**
+   * Devuelve el nombre de la entidad en plural
+   * @return Nombre de la entidad en plural
+   */
+  public static String getEntityNamePlural() {
+    return "Turnos";
+  }
 }

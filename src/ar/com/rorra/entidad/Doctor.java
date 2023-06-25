@@ -100,4 +100,20 @@ public class Doctor extends Empleado implements IEntidad {
 
     return ((Doctor)other).getId() == this.getId();
   }
+
+  /**
+   * Devuelve el nombre de la entidad
+   * @return Nombre de la entidad
+   */
+  public static String getEntityName() {
+    return "Doctor";
+  }
+
+  /**
+   * Devuelve el nombre de la entidad en plural
+   * @return Nombre de la entidad en plural
+   */
+  public static String getEntityNamePlural() {
+    return "Doctores";
+  }
 }

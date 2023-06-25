@@ -80,4 +80,20 @@ public abstract class Usuario extends Entidad implements IEntidad {
   public void setPassword(String password) {
     this.password = password;
   }
+
+  /**
+   * Devuelve el nombre de la entidad
+   * @return Nombre de la entidad
+   */
+  public static String getEntityName() {
+    return "Usuario";
+  }
+
+  /**
+   * Devuelve el nombre de la entidad en plural
+   * @return Nombre de la entidad en plural
+   */
+  public static String getEntityNamePlural() {
+    return "Usuarios";
+  }
 }

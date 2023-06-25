@@ -120,4 +120,20 @@ public abstract class Empleado extends Usuario implements IEntidad {
   public String toString() {
     return legajo + " - " + nombre;
   }
+
+  /**
+   * Devuelve el nombre de la entidad
+   * @return
+   */
+  public static String getEntityName() {
+    return "Empleado";
+  }
+
+  /**
+   * Devuelve el nombre de la entidad en plural
+   * @return
+   */
+  public static String getEntityNamePlural() {
+    return "Empleados";
+  }
 }

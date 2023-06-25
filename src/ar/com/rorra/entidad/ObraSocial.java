@@ -99,4 +99,20 @@ public class ObraSocial extends Entidad implements IEntidad {
   public String toString() {
     return this.nombre;
   }
+
+  /**
+   * Devuelve el nombre de la entidad
+   * @return nombre de la entidad
+   */
+  public static String getEntityName() {
+    return "Obra Social";
+  }
+
+  /**
+   * Devuelve el nombre de la entidad en plural
+   * @return nombre de la entidad en plural
+   */
+  public static String getEntityNamePlural() {
+    return "Obras Sociales";
+  }
 }

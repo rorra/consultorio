@@ -153,4 +153,20 @@ public class Paciente extends Usuario implements IEntidad {
   public String toString() {
     return dni + " - " + nombre;
   }
+
+  /**
+   * Obtiene el nombre de la entidad
+   * @return nombre de la entidad
+   */
+  public static String getEntityName() {
+    return "Paciente";
+  }
+
+  /**
+   * Obtiene el nombre de la entidad en plural
+   * @return nombre de la entidad en plural
+   */
+  public static String getEntityNamePlural() {
+    return "Pacientes";
+  }
 }
