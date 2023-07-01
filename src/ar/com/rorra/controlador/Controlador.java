@@ -249,6 +249,10 @@ public class Controlador {
         Map<String, String> conditions = Map.of("doctor_id", Integer.toString(filter.getId()));
         return (List<T>) getEntidades(turnoBO, conditions);
       }
+      if (filter.getClass() == Paciente.class) {
+        Map<String, String> conditions = Map.of("paciente_id", Integer.toString(filter.getId()));
+        return (List<T>) getEntidades(turnoBO, conditions);
+      }
     }
     return null;
   }
@@ -512,5 +516,14 @@ public class Controlador {
       return usuario;
     }
     return null;
+  }
+
+  /**
+   * Devuelve el usuario logueado
+   *
+   * @return Usuario logueado
+   */
+  public Usuario getUsuario() {
+    return this.usuario;
   }
 }

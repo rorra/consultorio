@@ -1,6 +1,7 @@
 package ar.com.rorra.ui;
 
 import ar.com.rorra.controlador.Controlador;
+import ar.com.rorra.entidad.Administrador;
 import ar.com.rorra.ui.administradores.PanelAdministradores;
 import ar.com.rorra.ui.consultorios.PanelConsultorios;
 import ar.com.rorra.ui.doctores.PanelDoctores;
@@ -55,33 +56,43 @@ public class FramePrincipal extends JFrame {
    * Construye el formulario principal de la aplicación
    */
   public void pantallaPrincipal() {
+    setTitle(null);
+
     JPanel panel = new JPanel();
 
     ArrayList<JButton> botones = new ArrayList<>();
-    JButton btnGestionarAdministradores = new JButton("Gestionar administradores");
-    botones.add(btnGestionarAdministradores);
-    JButton btnGestionarConsultorios = new JButton("Gestionar consultorios");
-    botones.add(btnGestionarConsultorios);
-    JButton btnGestionarDoctores = new JButton("Gestionar doctores");
-    botones.add(btnGestionarDoctores);
-    JButton btnGestionarObrasSociales = new JButton("Gestionar obras sociales");
-    botones.add(btnGestionarObrasSociales);
-    JButton btnGestionarPacientes = new JButton("Gestionar pacientes");
-    botones.add(btnGestionarPacientes);
+    if (controlador.getUsuario() instanceof Administrador) {
+      JButton btnGestionarAdministradores = new JButton("Gestionar administradores");
+      botones.add(btnGestionarAdministradores);
+      btnGestionarAdministradores.addActionListener(e -> controlador.visualizarAdministradores());
+
+      JButton btnGestionarConsultorios = new JButton("Gestionar consultorios");
+      botones.add(btnGestionarConsultorios);
+      btnGestionarConsultorios.addActionListener(e -> controlador.visualizarConsultorios());
+
+      JButton btnGestionarDoctores = new JButton("Gestionar doctores");
+      botones.add(btnGestionarDoctores);
+      btnGestionarDoctores.addActionListener(e -> controlador.visualizarDoctores());
+
+      JButton btnGestionarObrasSociales = new JButton("Gestionar obras sociales");
+      botones.add(btnGestionarObrasSociales);
+      btnGestionarObrasSociales.addActionListener(e -> controlador.visualizarObrasSociales());
+
+      JButton btnGestionarPacientes = new JButton("Gestionar pacientes");
+      botones.add(btnGestionarPacientes);
+      btnGestionarPacientes.addActionListener(e -> controlador.visualizarPacientes());
+
+      JButton btnReportes = new JButton("Reportes");
+      botones.add(btnReportes);
+      btnReportes.addActionListener(e -> controlador.visualizarReportes());
+    }
+
     JButton btnGestionarTurnos = new JButton("Gestionar turnos");
     botones.add(btnGestionarTurnos);
-    JButton btnReportes = new JButton("Reportes");
-    botones.add(btnReportes);
+    btnGestionarTurnos.addActionListener(e -> controlador.visualizarTurnos());
+
     JButton btnSalir = new JButton("Salir");
     botones.add(btnSalir);
-
-    btnGestionarAdministradores.addActionListener(e -> controlador.visualizarAdministradores());
-    btnGestionarConsultorios.addActionListener(e -> controlador.visualizarConsultorios());
-    btnGestionarDoctores.addActionListener(e -> controlador.visualizarDoctores());
-    btnGestionarObrasSociales.addActionListener(e -> controlador.visualizarObrasSociales());
-    btnGestionarPacientes.addActionListener(e -> controlador.visualizarPacientes());
-    btnGestionarTurnos.addActionListener(e -> controlador.visualizarTurnos());
-    btnReportes.addActionListener(e -> controlador.visualizarReportes());
     btnSalir.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
     panel.setLayout(new GridLayout(botones.size(), 1));
@@ -115,25 +126,29 @@ public class FramePrincipal extends JFrame {
 
     JMenu mnuArchivo = new JMenu("Archivo");
     mnuArchivo.setMnemonic('A');
-    JMenuItem mnuAdministradores = new JMenuItem("Gestionar Administradores", 'A');
-    JMenuItem mnuConsultorios = new JMenuItem("Gestionar Consultorios", 'C');
-    JMenuItem mnuDoctores = new JMenuItem("Gestionar Doctores", 'D');
-    JMenuItem mnuPacientes = new JMenuItem("Gestionar Pacientes", 'P');
+    if (controlador.getUsuario() instanceof Administrador) {
+      JMenuItem mnuAdministradores = new JMenuItem("Gestionar Administradores", 'A');
+      JMenuItem mnuConsultorios = new JMenuItem("Gestionar Consultorios", 'C');
+      JMenuItem mnuDoctores = new JMenuItem("Gestionar Doctores", 'D');
+      JMenuItem mnuPacientes = new JMenuItem("Gestionar Pacientes", 'P');
+      JMenuItem mnuReportes = new JMenuItem("Reportes", 'R');
+
+      mnuAdministradores.addActionListener(e -> controlador.visualizarAdministradores());
+      mnuDoctores.addActionListener(e -> controlador.visualizarDoctores());
+      mnuPacientes.addActionListener(e -> controlador.visualizarPacientes());
+      mnuReportes.addActionListener(e -> controlador.visualizarReportes());
+
+      mnuArchivo.add(mnuDoctores);
+      mnuArchivo.add(mnuAdministradores);
+      mnuArchivo.add(mnuConsultorios);
+      mnuArchivo.add(mnuPacientes);
+    }
     JMenuItem mnuTurnos = new JMenuItem("Gestionar Turnos", 'T');
-    JMenuItem mnuReportes = new JMenuItem("Reportes", 'R');
     JMenuItem mnuSalir = new JMenuItem("Salir", 'S');
 
-    mnuAdministradores.addActionListener(e -> controlador.visualizarAdministradores());
-    mnuDoctores.addActionListener(e -> controlador.visualizarDoctores());
-    mnuPacientes.addActionListener(e -> controlador.visualizarPacientes());
     mnuTurnos.addActionListener(e -> controlador.visualizarTurnos());
-    mnuReportes.addActionListener(e -> controlador.visualizarReportes());
     mnuSalir.addActionListener(e -> salir());
 
-    mnuArchivo.add(mnuDoctores);
-    mnuArchivo.add(mnuAdministradores);
-    mnuArchivo.add(mnuConsultorios);
-    mnuArchivo.add(mnuPacientes);
     mnuArchivo.add(mnuTurnos);
     mnuArchivo.addSeparator();
     mnuArchivo.add(mnuSalir);

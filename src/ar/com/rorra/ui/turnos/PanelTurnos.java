@@ -1,10 +1,12 @@
 package ar.com.rorra.ui.turnos;
 
 import ar.com.rorra.controlador.Controlador;
+import ar.com.rorra.entidad.Administrador;
 import ar.com.rorra.entidad.IEntidad;
 import ar.com.rorra.entidad.Turno;
 import ar.com.rorra.ui.PanelLista;
 
+import javax.swing.*;
 import java.util.List;
 
 public class PanelTurnos extends PanelLista {
@@ -22,9 +24,12 @@ public class PanelTurnos extends PanelLista {
    * @return lista de entidades
    * @param <T> tipo de entidad
    */
-  @Override
   protected <T extends IEntidad> List<T> listarEntidades() {
-    return controlador.listarEntidades(this.getEntityClass(), "fecha");
+    if (controlador.getUsuario() instanceof Administrador) {
+      return controlador.listarEntidades(this.getEntityClass(), "fecha");
+    } else {
+      return controlador.listarEntidades(this.getEntityClass(), controlador.getUsuario());
+    }
   }
 
   /**
@@ -35,5 +40,22 @@ public class PanelTurnos extends PanelLista {
   @Override
   public Class getEntityClass() {
     return Turno.class;
+  }
+
+  /**
+   * Construye los botones de la pantalla, si el usuario logueado es un paciente o doctor, los limita
+   * @return panel con los botones
+   */
+  @Override
+  protected void construirBotones() {
+    if (controlador.getUsuario() instanceof Administrador) {
+      super.construirBotones();
+    } else {
+      botones = new JPanel();
+
+      btnVolver = new JButton("Volver");
+      btnVolver.addActionListener(e -> accionVolver(e));
+      botones.add(btnVolver);
+    }
   }
 }
