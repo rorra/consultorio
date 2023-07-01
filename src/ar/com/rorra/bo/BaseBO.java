@@ -67,6 +67,14 @@ public abstract class BaseBO<ENTIDAD extends IEntidad, DAO extends BaseDAO<ENTID
     }
   }
 
+  public ENTIDAD getById(int id) throws BOException {
+    try {
+      return dao.get(id);
+    } catch (DBException e) {
+      throw new BOException("Error al obtener la entidad de base de datos: " + e.getMessage());
+    }
+  }
+
   public ArrayList<ENTIDAD> getAll() throws BOException {
     try {
       return dao.getAll();

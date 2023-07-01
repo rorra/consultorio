@@ -1,5 +1,6 @@
 package ar.com.rorra.dao;
 
+import ar.com.rorra.entidad.Doctor;
 import ar.com.rorra.entidad.Turno;
 import ar.com.rorra.exceptions.DBException;
 import ar.com.rorra.exceptions.DBExceptionType;
@@ -7,6 +8,7 @@ import ar.com.rorra.exceptions.DBExceptionType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -87,5 +89,18 @@ public class TurnoDAO extends BaseDAO<Turno> implements ITurnoDAO {
   public Turno getByDoctorFecha(int doctorId, LocalDateTime fecha) throws DBException {
     Map params = Map.of("doctor_id", Integer.toString(doctorId), "fecha", fecha.toString());
     return getByField(params);
+  }
+
+  /**
+   * Obtiene la lista de turnos entre dos fechas
+   * @param desde Fecha desde
+   * @param hasta Fecha hasta
+   * @return Lista de turnos
+   * @throws DBException
+   */
+  @Override
+  public ArrayList<Turno> getAllBetweenDates(Doctor doctor, LocalDateTime desde, LocalDateTime hasta) throws DBException {
+    String sql = "SELECT * FROM turnos WHERE doctor_id = " + doctor.getId() + " AND fecha BETWEEN '" + desde + "' AND '" + hasta + "'";
+    return fetchAllByQuery(sql);
   }
 }

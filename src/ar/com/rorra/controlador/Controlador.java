@@ -20,7 +20,12 @@ import ar.com.rorra.ui.turnos.PanelFormularioTurno;
 import ar.com.rorra.ui.turnos.PanelTurnos;
 
 import javax.swing.*;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -227,11 +232,45 @@ public class Controlador {
    * @param <T>    Clase de la entidad a listar.
    * @return Lista de entidades.
    */
-  public <T extends IEntidad> List<T> listarEntidades(Class klass, IEntidad filter) {
+  public <T extends IEntidad> List<T> listarEntidades(Class klass, IEntidad filter, Map<String, String> filters) {
+    // Filtros para doctores
     if (klass == Doctor.class) {
       if (filter.getClass() == Consultorio.class) {
         Map<String, String> conditions = Map.of("consultorio_id", Integer.toString(filter.getId()));
         return (List<T>) getEntidades(doctorBO, conditions);
+      }
+    }
+    // Filtro para turnos
+    if (klass == Turno.class) {
+      if (filter.getClass() == Doctor.class) {
+        Map<String, String> conditions = Map.of("doctor_id", Integer.toString(filter.getId()));
+        return (List<T>) getEntidades(turnoBO, conditions);
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Función parametrizada para listar las entidades.
+   *
+   * @param klass  Clase de la entidad a listar.
+   * @param filter Filtro para la lista.
+   * @param <T>    Clase de la entidad a listar.
+   * @return Lista de entidades.
+   */
+  public <T extends IEntidad> List<T> listarEntidades(Class klass, IEntidad filter) {
+    // Filtros para doctores
+    if (klass == Doctor.class) {
+      if (filter.getClass() == Consultorio.class) {
+        Map<String, String> conditions = Map.of("consultorio_id", Integer.toString(filter.getId()));
+        return (List<T>) getEntidades(doctorBO, conditions);
+      }
+    }
+    // Filtro para turnos
+    if (klass == Turno.class) {
+      if (filter.getClass() == Doctor.class) {
+        Map<String, String> conditions = Map.of("doctor_id", Integer.toString(filter.getId()));
+        return (List<T>) getEntidades(turnoBO, conditions);
       }
     }
     return null;
@@ -413,5 +452,42 @@ public class Controlador {
    */
   public void visualizarReportes() {
     framePrincipal.visualizarPanel(new FormularioReporte(this));
+  }
+
+  /**
+   * Obtiene una lista con los medicos y sus recaudaciones entre dos fechas
+   * @param desde Fecha desde
+   * @param hasta Fecha hasta
+   * @return Lista de medicos y sus recaudaciones
+   */
+  public ArrayList<String[]> ingresosPorMedico(LocalDateTime desde, LocalDateTime hasta) {
+    ArrayList<String[]> filas = new ArrayList<>();
+    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("es_AR"));
+
+    // Para cada doctor
+    for (IEntidad entidadDoctor: listarEntidades(Doctor.class)) {
+      BigDecimal total = BigDecimal.ZERO;
+      Doctor doctor = (Doctor) entidadDoctor;
+      // Para cada turno del doctor en esas fechas
+      for (Turno turno: turnoBO.getAllBetweenDates(doctor, desde, hasta)) {
+        // Obtengo el descuento de la obra social y adicion el total menos el descuento
+        ObraSocial obraSocial = turno.getPaciente().getObraSocial();
+        int descuento = obraSocial.getDescuento(); // El descuento va de 0 a 100
+        if (descuento > 0) {
+          total = total.add(doctor.getTarifa().multiply(new BigDecimal(100 - descuento).divide(new BigDecimal(100))));
+        } else {
+          total = total.add(doctor.getTarifa());
+        }
+      }
+      // Filas formateadas para el reporte
+      filas.add(new String[] {
+        Integer.toString(doctor.getId()),
+        doctor.getNombre(),
+        currencyFormatter.format(doctor.getTarifa()),
+        currencyFormatter.format(total.floatValue())
+      });
+    }
+
+    return filas;
   }
 }

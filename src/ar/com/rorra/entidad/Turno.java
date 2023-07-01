@@ -1,5 +1,6 @@
 package ar.com.rorra.entidad;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import ar.com.rorra.util.Dates;
 
@@ -138,5 +139,13 @@ public class Turno extends Entidad implements IEntidad {
    */
   public static String getEntityNamePlural() {
     return "Turnos";
+  }
+
+  /**
+   * Devuelve el costo del turno
+   * @return Costo del turno
+   */
+  public BigDecimal getCosto() {
+    return new BigDecimal(100);
   }
 }
