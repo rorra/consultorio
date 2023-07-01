@@ -30,13 +30,14 @@ public class FramePrincipal extends JFrame {
     setSize(1920, 1080);
     setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    //setJMenuBar(crearMenu());
-    //pantallaPrincipal();
 
     setVisible(true);
   }
 
-  public void visualizarMenu() {
+  /**
+   * Construye el menu, funcion a ser llamada luego del login
+   */
+  public void construirMenu() {
     setJMenuBar(crearMenu());
   }
 

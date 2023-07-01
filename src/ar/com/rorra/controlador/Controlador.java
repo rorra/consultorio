@@ -494,6 +494,7 @@ public class Controlador {
       if (validarLoginHlp(administradorBO, conditions) != null ||
         validarLoginHlp(doctorBO, conditions) != null ||
         validarLoginHlp(pacienteBO, conditions) != null) {
+        framePrincipal.construirMenu();
         return true;
       }
     } catch (BOException ex) {

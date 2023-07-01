@@ -14,7 +14,7 @@ public class PanelFormularioLogin extends PanelFormulario {
   private JLabel lblEmail;
   private JLabel lblPassword;
   private JTextField txtEmail;
-  private JTextField txtPassword;
+  private JPasswordField txtPassword;
 
   /**
    * Constructor
@@ -47,7 +47,7 @@ public class PanelFormularioLogin extends PanelFormulario {
     lblPassword = UI.crearLabel("Password: ");
 
     txtEmail = UI.construirTextField("");
-    txtPassword = UI.construirTextField("");
+    txtPassword = new JPasswordField();
 
     form.add(lblEmail);
     form.add(txtEmail);

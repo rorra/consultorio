@@ -54,4 +54,21 @@ public class AdministradorBO extends BaseBO<Administrador, AdministradorDAO> {
     }
     return false;
   }
+
+  /**
+   * Elimina un administrador, a no ser que sea el unico administrador en la base de datos
+   *
+   * @param entidad Entidad a eliminar
+   * @throws BOException
+   */
+  public void delete(Administrador entidad) throws BOException {
+    try {
+      if (getAll().size() == 1) {
+        throw new BOException("No se puede eliminar el único administrador");
+      }
+      dao.delete(entidad);
+    } catch (DBException e) {
+      throw new BOException("Error al eliminar la entidad en la base de datos: " + e.getMessage());
+    }
+  }
 }
