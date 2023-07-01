@@ -1,7 +1,6 @@
 package ar.com.rorra.ui;
 
 import ar.com.rorra.controlador.Controlador;
-import ar.com.rorra.entidad.Doctor;
 import ar.com.rorra.entidad.IEntidad;
 
 import javax.swing.*;
@@ -11,6 +10,8 @@ import java.awt.event.ActionEvent;
 public abstract class PanelFormulario extends Panel {
   protected Controlador controlador;
   protected IEntidad entidad;
+
+  public PanelFormulario() {}
 
   /**
    * Constructor
@@ -40,15 +41,31 @@ public abstract class PanelFormulario extends Panel {
   protected JPanel construirBotones() {
     JPanel botones = new JPanel();
 
-    JButton btnGuardar = new JButton("Guardar");
+    JButton btnGuardar = new JButton(labelBotonGuardar());
     btnGuardar.addActionListener(e -> accionGuardar(e));
     botones.add(btnGuardar);
 
-    JButton btnCancelar = new JButton("Cancelar");
+    JButton btnCancelar = new JButton(labelBotonCancelar());
     btnCancelar.addActionListener(e -> accionCancelar(e));
     botones.add(btnCancelar);
 
     return botones;
+  }
+
+  /**
+   * Etiqueta par ael boton guardar
+   * @return etiqueta
+   */
+  protected String labelBotonGuardar() {
+    return "Guardar";
+  }
+
+  /**
+   * Etiqueta para el boton cancelar
+   * @return label
+   */
+  protected String labelBotonCancelar() {
+    return "Cancelar";
   }
 
   /**

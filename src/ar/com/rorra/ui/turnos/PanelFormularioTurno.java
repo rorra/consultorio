@@ -134,7 +134,7 @@ public class PanelFormularioTurno extends PanelFormulario {
     listDoctoresModel = new DefaultListModel<>();
 
     if (lstConsultorios.getSelectedValue() != null) {
-      for (IEntidad entidad : controlador.listarEntidades(Doctor.class, lstConsultorios.getSelectedValue())) {
+      for (IEntidad entidad : controlador.listarEntidades(Doctor.class, (Consultorio)lstConsultorios.getSelectedValue())) {
         listDoctoresModel.addElement((Doctor) entidad);
       }
     }

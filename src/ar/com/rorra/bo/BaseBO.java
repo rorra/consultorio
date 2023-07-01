@@ -50,6 +50,13 @@ public abstract class BaseBO<ENTIDAD extends IEntidad, DAO extends BaseDAO<ENTID
     }
   }
 
+  /**
+   * Modifica una entidad en el dispositivo de almacenamiento
+   *
+   * @param entidad Entidad a modificar
+   * @return Entidad modificada
+   * @throws BOException
+   */
   public ENTIDAD update(ENTIDAD entidad) throws BOException {
     validar(entidad);
     try {
@@ -59,6 +66,12 @@ public abstract class BaseBO<ENTIDAD extends IEntidad, DAO extends BaseDAO<ENTID
     }
   }
 
+  /**
+   * Elimina una entidad del dispositivo de almacenamiento
+   *
+   * @param entidad Entidad a eliminar
+   * @throws BOException
+   */
   public void delete(ENTIDAD entidad) throws BOException {
     try {
       dao.delete(entidad);
@@ -67,6 +80,13 @@ public abstract class BaseBO<ENTIDAD extends IEntidad, DAO extends BaseDAO<ENTID
     }
   }
 
+  /**
+   * Obtiene una entidad por su identifidador
+   *
+   * @param id Identificador de la entidad
+   * @return Entidad
+   * @throws BOException
+   */
   public ENTIDAD getById(int id) throws BOException {
     try {
       return dao.get(id);
@@ -75,6 +95,26 @@ public abstract class BaseBO<ENTIDAD extends IEntidad, DAO extends BaseDAO<ENTID
     }
   }
 
+  /**
+   * Obtiene una entidad por una lista de condiciones
+   * @param conditions Lista de condiciones
+   * @return Entidad
+   * @throws BOException
+   */
+  public ENTIDAD getByConditions(Map<String, String> conditions) throws BOException {
+    try {
+      return dao.getByField(conditions);
+    } catch (DBException e) {
+      throw new BOException("Error al obtener la entidad de base de datos: " + e.getMessage());
+    }
+  }
+
+  /**
+   * Obtiene todas las entidades
+   *
+   * @return Lista de entidades
+   * @throws BOException
+   */
   public ArrayList<ENTIDAD> getAll() throws BOException {
     try {
       return dao.getAll();
@@ -83,6 +123,13 @@ public abstract class BaseBO<ENTIDAD extends IEntidad, DAO extends BaseDAO<ENTID
     }
   }
 
+  /**
+   * Obtiene todas las entidades ordenadas por un campo
+   *
+   * @param sortField Campo por el que se ordena
+   * @return Lista de entidades
+   * @throws BOException
+   */
   public ArrayList<ENTIDAD> getAll(String sortField) throws BOException {
     try {
       return dao.getAll(sortField);
@@ -91,6 +138,13 @@ public abstract class BaseBO<ENTIDAD extends IEntidad, DAO extends BaseDAO<ENTID
     }
   }
 
+  /**
+   * Obtiene todas las entidades por un mapa de condiciones
+   *
+   * @param conditions Mapa de condiciones
+   * @return Lista de entidades
+   * @throws BOException
+   */
   public ArrayList<ENTIDAD> getAll(Map<String, String> conditions) throws BOException {
     try {
       return dao.getAll(conditions);

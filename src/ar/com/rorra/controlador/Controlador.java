@@ -11,6 +11,7 @@ import ar.com.rorra.ui.consultorios.PanelConsultorios;
 import ar.com.rorra.ui.consultorios.PanelFormularioConsultorio;
 import ar.com.rorra.ui.doctores.PanelDoctores;
 import ar.com.rorra.ui.doctores.PanelFormularioDoctor;
+import ar.com.rorra.ui.login.PanelFormularioLogin;
 import ar.com.rorra.ui.obrasSociales.PanelFormularioObraSocial;
 import ar.com.rorra.ui.obrasSociales.PanelObrasSociales;
 import ar.com.rorra.ui.pacientes.PanelFormularioPaciente;
@@ -48,6 +49,7 @@ public class Controlador {
   private ObraSocialBO obraSocialBO;
   private PacienteBO pacienteBO;
   private TurnoBO turnoBO;
+  private Usuario usuario; // Usuario logueado
 
   public Controlador() {
     administradorBO = new AdministradorBO();
@@ -64,6 +66,7 @@ public class Controlador {
   public void run() {
     SwingUtilities.invokeLater(() -> {
       framePrincipal = new FramePrincipal(this);
+      visualizarLogin();
     });
   }
 
@@ -232,32 +235,6 @@ public class Controlador {
    * @param <T>    Clase de la entidad a listar.
    * @return Lista de entidades.
    */
-  public <T extends IEntidad> List<T> listarEntidades(Class klass, IEntidad filter, Map<String, String> filters) {
-    // Filtros para doctores
-    if (klass == Doctor.class) {
-      if (filter.getClass() == Consultorio.class) {
-        Map<String, String> conditions = Map.of("consultorio_id", Integer.toString(filter.getId()));
-        return (List<T>) getEntidades(doctorBO, conditions);
-      }
-    }
-    // Filtro para turnos
-    if (klass == Turno.class) {
-      if (filter.getClass() == Doctor.class) {
-        Map<String, String> conditions = Map.of("doctor_id", Integer.toString(filter.getId()));
-        return (List<T>) getEntidades(turnoBO, conditions);
-      }
-    }
-    return null;
-  }
-
-  /**
-   * Función parametrizada para listar las entidades.
-   *
-   * @param klass  Clase de la entidad a listar.
-   * @param filter Filtro para la lista.
-   * @param <T>    Clase de la entidad a listar.
-   * @return Lista de entidades.
-   */
   public <T extends IEntidad> List<T> listarEntidades(Class klass, IEntidad filter) {
     // Filtros para doctores
     if (klass == Doctor.class) {
@@ -402,7 +379,16 @@ public class Controlador {
    * Muestra la pantalla principal
    */
   public void visualizarMenuPrincipal() {
+    getFramePrincipal().setSize(1920, 1080);
     getFramePrincipal().pantallaPrincipal();
+  }
+
+  /**
+   * Muestra el login
+   */
+  public void visualizarLogin() {
+    framePrincipal.setSize(1920, 150);
+    framePrincipal.visualizarPanel(new PanelFormularioLogin(this, null));
   }
 
   /**
@@ -489,5 +475,42 @@ public class Controlador {
     }
 
     return filas;
+  }
+
+  /**
+   * Valida el login de un administrador
+   * @param email email del administrador
+   * @param password password del administrador
+   * @return true si el login es correcto, false en caso contrario
+   */
+  public boolean validarLogin(String email, String password) {
+    Map<String, String> conditions = Map.of("email", email, "password", password);
+
+    try {
+      if (validarLoginHlp(administradorBO, conditions) != null ||
+        validarLoginHlp(doctorBO, conditions) != null ||
+        validarLoginHlp(pacienteBO, conditions) != null) {
+        return true;
+      }
+    } catch (BOException ex) {
+      return false;
+    }
+    return false;
+  }
+
+  /**
+   * Helper de validarLogin, para evitar repetir codigo
+   * @param bo BO a utilizar
+   * @param conditions condiciones a utilizar
+   * @return Usuario si el login es correcto, null en caso contrario
+   * @throws BOException
+   */
+  private Usuario validarLoginHlp(BaseBO bo, Map<String, String> conditions) throws BOException {
+    Usuario usuario = (Usuario)bo.getByConditions(conditions);
+    if (usuario != null) {
+      this.usuario = usuario;
+      return usuario;
+    }
+    return null;
   }
 }

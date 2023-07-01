@@ -267,6 +267,11 @@ public abstract class BaseDAO<T extends IEntidad> implements IBaseDAO<T> {
     return fetchOneByQuery(sql);
   }
 
+  /**
+   * Busca una entidad en la base de datos
+   * @param sql Query a ejecutar
+   * @return Entidad de la base de datos
+   */
   protected T fetchOneByQuery(String sql) {
     Connection connection = DBConnection.getInstance().getConnection();
     T entidad = null;
@@ -288,6 +293,11 @@ public abstract class BaseDAO<T extends IEntidad> implements IBaseDAO<T> {
     return entidad;
   }
 
+  /**
+   * Busca una lista de entidades en la base de datos
+   * @param sql Query a ejecutar
+   * @return Lista de entidades de la base de datos
+   */
   protected ArrayList<T> fetchAllByQuery(String sql) {
     Connection connection = DBConnection.getInstance().getConnection();
     ArrayList<T> lista = new ArrayList<>();

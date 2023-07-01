@@ -29,11 +29,14 @@ public class FramePrincipal extends JFrame {
     setSize(1920, 1080);
     setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setJMenuBar(crearMenu());
-
-    pantallaPrincipal();
+    //setJMenuBar(crearMenu());
+    //pantallaPrincipal();
 
     setVisible(true);
+  }
+
+  public void visualizarMenu() {
+    setJMenuBar(crearMenu());
   }
 
   /**

@@ -1,11 +1,12 @@
 package ar.com.rorra.dao;
 
+import ar.com.rorra.entidad.IEntidad;
 import ar.com.rorra.exceptions.DBException;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-public interface IBaseDAO<T> {
+public interface IBaseDAO<T extends IEntidad> {
   /**
    * Obtiene un objeto de la base de datos a partir de su id.
    *
